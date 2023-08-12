@@ -16,5 +16,12 @@ namespace backend.Controllers
         public async Task<IActionResult> SignUp() {
             return Ok("Sign up");
         }
+
+        [HttpPost("/signin")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public async Task<IActionResult> SignIn() {
+            return Ok("Sign in");
+        }
     }
 }
