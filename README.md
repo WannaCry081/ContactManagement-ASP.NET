@@ -30,3 +30,35 @@
 - **PUT /api/contacts/{contactId}/numbers/{numberId}**: Update details of a specific contact number for a contact.
 - **DELETE /api/contacts/{contactId}/numbers/{numberId}**: Delete a specific contact number for a contact.
 
+<!-- 
+    // https://www.nuget.org/packages/AutoMapper.Extensions.Microsoft.DependencyInjection
+    dotnet add package AutoMapper.Extensions.Microsoft.DependencyInjection --version 12.0.1
+    
+    // https://www.nuget.org/packages/BCrypt.Net-Next/
+    dotnet add package BCrypt.Net-Next --version 4.0.3
+
+    // https://www.nuget.org/packages/Microsoft.EntityFrameworkCore
+    dotnet add package Microsoft.EntityFrameworkCore --version 7.0.9
+
+    // https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/
+    dotnet add package Microsoft.EntityFrameworkCore.Design --version 7.0.9
+
+    // https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/
+    dotnet add package Microsoft.EntityFrameworkCore.SqlServer --version 7.0.9
+
+    // https://www.nuget.org/packages/System.IdentityModel.Tokens.Jwt
+    dotnet add package System.IdentityModel.Tokens.Jwt --version 6.32.1
+    
+    // https://www.nuget.org/packages/Microsoft.IdentityModel.Tokens
+    dotnet add package Microsoft.IdentityModel.Tokens --version 6.32.1
+
+    // https://www.nuget.org/packages/Swashbuckle.AspNetCore.Filters
+    dotnet add package Swashbuckle.AspNetCore.Filters --version 7.0.8
+
+    dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer;
+
+    dotnet add package Microsoft.AspNetCore.Mvc.Versioning
+
+    dotnet add package Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer
+
+-->
