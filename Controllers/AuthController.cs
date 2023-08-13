@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using backend.Exceptions;
 using backend.Models.AuthModels;
 using backend.Services.AuthService;
-using System.Linq.Expressions;
 
 namespace backend.Controllers
 {
