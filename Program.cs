@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Repositories.AuthRepository;
+using backend.Services.AuthService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 
