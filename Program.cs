@@ -6,8 +6,10 @@ using Swashbuckle.AspNetCore.Filters;
 using backend.Data;
 using backend.Repositories.AuthRepository;
 using backend.Repositories.ContactRepository;
+using backend.Repositories.UserRepository;
 using backend.Services.AuthService;
 using backend.Services.ContactService;
+using backend.Services.UserService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +59,8 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IContactService, ContactService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 var app = builder.Build();
