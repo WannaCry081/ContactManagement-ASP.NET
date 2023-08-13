@@ -9,6 +9,8 @@ namespace backend.Mappers
         public AuthMapper() {
             CreateMap<User, SignUpModel>();
             CreateMap<User, SignInModel>();
+            CreateMap<SignUpModel, User>();
+            CreateMap<SignInModel, User>();
         }
     }
 }
