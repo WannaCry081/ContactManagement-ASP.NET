@@ -23,7 +23,9 @@ namespace backend.Repositories.AuthRepository
 
         public async Task<bool> AddNewUser(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(user);
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
         }
 
     }
