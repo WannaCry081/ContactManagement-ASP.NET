@@ -28,6 +28,9 @@ namespace backend.Services.AuthService
             {
                 throw new UserSignUpFailedException("User already exists.");
             }
+
+            HashPasword(newUser, request.Password);
+
             var isUserAdded = await _authRepository.AddNewUser(newUser);
             if (!isUserAdded)
             {
@@ -40,6 +43,13 @@ namespace backend.Services.AuthService
         public Task<string> SignIn(SignInModel request)
         {
             throw new NotImplementedException();
+        }
+
+        private void HashPasword(User user, string password)
+        {
+            string passwordSalt = BCrypt.Net.BCrypt.GenerateSalt();
+            user.PasswordSalt = passwordSalt;
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password, passwordSalt);
         }
     }
 }
