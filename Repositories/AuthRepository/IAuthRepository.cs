@@ -6,5 +6,6 @@ namespace backend.Repositories.AuthRepository
     {
         Task<bool> IsUserExists(User user);
         Task<bool> AddNewUser(User user);
+        Task<User?> GetUserByEmail(string email);
     }
 }
