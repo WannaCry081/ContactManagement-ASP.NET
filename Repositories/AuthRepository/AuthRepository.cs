@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Entities;
+using Microsoft.Identity.Client;
 
 namespace backend.Repositories.AuthRepository
 {
@@ -26,6 +27,13 @@ namespace backend.Repositories.AuthRepository
             _context.Users.Add(user);
             var result = await _context.SaveChangesAsync();
             return result > 0;
+        }
+
+        public async Task<User?> GetUserByEmail(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(
+                (c) => c.Email.Equals(email)
+            );
         }
     }
 }
