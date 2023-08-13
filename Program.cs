@@ -5,7 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
 using backend.Data;
 using backend.Repositories.AuthRepository;
+using backend.Repositories.ContactRepository;
 using backend.Services.AuthService;
+using backend.Services.ContactService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,6 +55,8 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 
 var app = builder.Build();
