@@ -19,7 +19,7 @@ namespace backend.Controllers
             _authService = authService ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [HttpPost("/signin")]
+        [HttpPost("signup")]
         [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> SignUp([FromBody] SignUpModel request)
@@ -41,7 +41,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost("/signin")]
+        [HttpPost("signin")]
         [Consumes("application/json")]
         [Produces("application/json")]
         public async Task<IActionResult> SignIn([FromBody] SignInModel request)
