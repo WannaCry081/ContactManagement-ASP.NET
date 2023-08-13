@@ -26,7 +26,10 @@ namespace backend.Entities
         
         [StringLength(150)]
         public string PasswordSalt { get; set; } = string.Empty;
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+
+        public ICollection<Contact> Contacts { get; set; } = new List<Contact>();
     }
 }
