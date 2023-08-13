@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using backend.Services.ContactService;
 
 namespace backend.Controllers
 {
@@ -8,9 +9,13 @@ namespace backend.Controllers
     [Route("/api/contact")]
     public class ContactController : ControllerBase
     {
-        public ContactController()
-        {
+        private readonly ILogger<ContactController> _logger;
+        private readonly IContactService _contactService;
 
+        public ContactController(ILogger<ContactController> logger, IContactService contactService)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
         }
 
         [HttpGet]
