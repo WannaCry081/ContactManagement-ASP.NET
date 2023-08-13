@@ -40,9 +40,20 @@ namespace backend.Services.AuthService
             return TokenGenerator.AccessToken(newUser, _configuration);
         }
 
-        public Task<string> SignIn(SignInModel request)
+        public async Task<string> SignIn(SignInModel request)
         {
-            throw new NotImplementedException();
+            var user = await _authRepository.GetUserByEmail(request.Email);
+            if (user is null)
+            {
+                throw new NotFoundException("user not found.");
+            }
+
+            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+            {
+                throw new UserSignInFailedException("Password does not match.");
+            }
+
+            return TokenGenerator.AccessToken(user, _configuration);
         }
 
         private void HashPasword(User user, string password)
