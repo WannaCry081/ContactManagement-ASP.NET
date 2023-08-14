@@ -30,7 +30,7 @@ namespace backend.Controllers
         {
             try
             {
-                var user = await _userService.GetUserProfile();
+                var user = await _userService.GetUserByToken();
                 var response = await _contactService.GetUserContacts(user);
                 return Ok(response);
             }
@@ -52,7 +52,7 @@ namespace backend.Controllers
         {
             try
             {
-                var user = await _userService.GetUserProfile();
+                var user = await _userService.GetUserByToken();
                 var response = await _contactService.GetUserContact(user, contactId);
                 return Ok(response);
             }
@@ -80,7 +80,7 @@ namespace backend.Controllers
         {
             try
             {
-                var user = await _userService.GetUserProfile();
+                var user = await _userService.GetUserByToken();
                 var response = await _contactService.CreateUserContact(user, request);
                 return Ok(response);
             }
@@ -108,7 +108,7 @@ namespace backend.Controllers
         {
             try
             {
-                var user = await _userService.GetUserProfile();
+                var user = await _userService.GetUserByToken();
                 var response = await _contactService.UpdateUserContact(user, contactId, request);
                 return Ok(response);
             }
@@ -140,7 +140,7 @@ namespace backend.Controllers
         {
             try
             {
-                var user = await _userService.GetUserProfile();
+                var user = await _userService.GetUserByToken();
                 var response = await _contactService.DeleteUserContact(user, contactId);
                 return Ok("Successfully deleted user's contact.");
             }
