@@ -33,9 +33,17 @@ namespace backend.Services.ContactService
             return _mapper.Map<GetUserContactModel>(response);
         }
 
-        public Task<GetUserContactModel> CreateUserContact(User user, UpsertUserContactModel request)
+        public async Task<GetUserContactModel> CreateUserContact(User user, UpsertUserContactModel request)
         {
-            throw new NotImplementedException();
+            var newContact = _mapper.Map<Contact>(request);
+            newContact.UserId = user.Id;
+
+            var response = await _contactRepository.CreateUserContact(newContact);
+            if (!response)
+            {   
+                throw new ContactAddFailedException("Failed to add contact.");
+            }
+            return _mapper.Map<GetUserContactModel>(newContact);
         }
 
         public Task<GetUserContactModel> UpdateUserContact(User user, UpsertUserContactModel request)
