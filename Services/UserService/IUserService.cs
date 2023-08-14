@@ -1,9 +1,9 @@
-using backend.Models.UserModels;
+using backend.Entities;
 
 namespace backend.Services.UserService
 {
     public interface IUserService
     {
-        Task<GetUserProfileModel> GetUserProfile();
+        Task<User> GetUserProfile();
     }
 }
