@@ -3,6 +3,7 @@ using backend.Entities;
 using backend.Exceptions;
 using backend.Models.ContactModels;
 using backend.Repositories.ContactRepository;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace backend.Services.ContactService
 {
@@ -60,13 +61,25 @@ namespace backend.Services.ContactService
             {
                 throw new ContactUpdateFailedException("Failed to update contact.");
             }
-            
+
             return _mapper.Map<GetUserContactModel>(newContactDetails);
         }
 
-        public Task<bool> DeleteUserContact(User user, int contactId)
+        public async Task<bool> DeleteUserContact(User user, int contactId)
         {
-            throw new NotImplementedException();
+            var contact = await _contactRepository.GetUserContact(user.Id, contactId);
+            if (contact is null)
+            {
+                throw new ContactNotFoundException("Contact not found.");
+            }
+
+            var response = await _contactRepository.DeleteUserContact(contact);
+            if (!response)
+            {
+                throw new ContactDeleteFailedException("Failed to delete contact.");
+            }
+
+            return response;
         }
     }
 }
