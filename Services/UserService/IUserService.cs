@@ -7,5 +7,6 @@ namespace backend.Services.UserService
     {
         Task<User> GetUserByToken();
         Task<GetUserProfileModel> GetUserProfile();
+        Task<GetUserProfileModel> UpdateUserProfile(UpdateUserProfileModel request);
     }
 }

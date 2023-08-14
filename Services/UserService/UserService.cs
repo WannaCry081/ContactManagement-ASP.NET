@@ -47,5 +47,22 @@ namespace backend.Services.UserService
             var response = await GetUserByToken();
             return _mapper.Map<GetUserProfileModel>(response);
         }
+
+        public async Task<GetUserProfileModel> UpdateUserProfile(UpdateUserProfileModel request)
+        {
+            var user = await GetUserByToken();
+            var newUserDetails = _mapper.Map<User>(request);
+            var isUserUpdated = await _userRepository.UpdateUserProfile(user, newUserDetails);
+
+            if (!isUserUpdated)
+            {
+                throw new UserUpdateFailedException("Failed to update user profile.");
+            }
+
+            var response = _mapper.Map<GetUserProfileModel>(newUserDetails);
+            response.Id = user.Id;
+            
+            return response;
+        }
     }
 }
