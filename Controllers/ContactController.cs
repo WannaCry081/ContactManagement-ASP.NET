@@ -136,9 +136,19 @@ namespace backend.Controllers
 
         [HttpDelete("{contactId}")]
         [Produces("application/json")]
-        public Task<IActionResult> DeleteUserContact([FromRoute] int contactId)
+        public async Task<IActionResult> DeleteUserContact([FromRoute] int contactId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await _userService.GetUserProfile();
+                var response = await _contactService.DeleteUserContact(user, contactId);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "");
+                return Problem(ex.Message);
+            }
         }
     }
 }
