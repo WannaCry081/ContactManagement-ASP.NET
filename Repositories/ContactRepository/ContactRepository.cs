@@ -23,10 +23,16 @@ namespace backend.Repositories.ContactRepository
         public async Task<Contact?> GetUserContact(int userId, int contactId)
         {
             return await _context.Contacts.Where(
-                (c) => c.UserId.Equals(userId) && 
+                (c) => c.UserId.Equals(userId) &&
                         c.Id.Equals(contactId)
             ).FirstOrDefaultAsync();
         }
 
+        public async Task<bool> CreateUserContact(Contact contact)
+        {
+            _context.Add(contact);
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
     }
 }
