@@ -19,5 +19,14 @@ namespace backend.Repositories.ContactRepository
                 (c) => c.UserId.Equals(userId)
             ).ToListAsync();
         }
+
+        public async Task<Contact?> GetUserContact(int userId, int contactId)
+        {
+            return await _context.Contacts.Where(
+                (c) => c.UserId.Equals(userId) && 
+                        c.Id.Equals(contactId)
+            ).FirstOrDefaultAsync();
+        }
+
     }
 }
