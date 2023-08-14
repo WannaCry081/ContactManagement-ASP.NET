@@ -40,15 +40,28 @@ namespace backend.Services.ContactService
 
             var response = await _contactRepository.CreateUserContact(newContact);
             if (!response)
-            {   
+            {
                 throw new ContactAddFailedException("Failed to add contact.");
             }
             return _mapper.Map<GetUserContactModel>(newContact);
         }
 
-        public Task<GetUserContactModel> UpdateUserContact(User user, UpsertUserContactModel request)
+        public async Task<GetUserContactModel> UpdateUserContact(User user, int contactId, UpsertUserContactModel request)
         {
-            throw new NotImplementedException();
+            var contact = await _contactRepository.GetUserContact(user.Id, contactId);
+            if (contact is null)
+            {
+                throw new ContactNotFoundException("Contact not found.");
+            }
+
+            var newContactDetails = _mapper.Map<Contact>(request);
+            var response = await _contactRepository.UpdateUserContact(contact, newContactDetails);
+            if (!response)
+            {
+                throw new ContactUpdateFailedException("Failed to update contact.");
+            }
+            
+            return _mapper.Map<GetUserContactModel>(newContactDetails);
         }
 
         public Task<bool> DeleteUserContact(User user, int contactId)
