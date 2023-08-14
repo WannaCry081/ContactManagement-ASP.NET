@@ -19,5 +19,15 @@ namespace backend.Repositories.UserRepository
                 (c) => c.Id.Equals(userId) && c.Email.Equals(email)
             ).FirstOrDefaultAsync();
         }
+
+        public async Task<bool> UpdateUserProfile(User user, User newUserDetails) {
+            user.FirstName = newUserDetails.FirstName;
+            user.LastName = newUserDetails.LastName;
+            user.UserName = newUserDetails.UserName;
+            user.UpdatedAt = DateTime.Now;
+
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
     }
 }
