@@ -37,7 +37,7 @@ namespace backend.Controllers
             catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
-                return NotFound(ex.Message);
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace backend.Controllers
             catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
-                return NotFound(ex.Message);
+                return Unauthorized(ex.Message);
             }
             catch (ContactNotFoundException ex)
             {
@@ -87,7 +87,7 @@ namespace backend.Controllers
             catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
-                return NotFound(ex.Message);
+                return Unauthorized(ex.Message);
             }
             catch (ContactAddFailedException ex)
             {
@@ -96,7 +96,7 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "An error occurred while attempting to get the user's contact.");
+                _logger.LogCritical(ex, "An error occurred while attempting to create the user's contact.");
                 return Problem(ex.Message);
             }
         }
@@ -104,9 +104,34 @@ namespace backend.Controllers
         [HttpPut("{contactId}")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public Task<IActionResult> UpdateUserContact([FromRoute] int contactId, [FromBody] UpsertUserContactModel request)
+        public async Task<IActionResult> UpdateUserContact([FromRoute] int contactId, [FromBody] UpsertUserContactModel request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await _userService.GetUserProfile();
+                var response = await _contactService.UpdateUserContact(user, contactId, request);
+                return Ok(response);
+            }
+            catch (UserNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return Unauthorized(ex.Message);
+            }
+            catch (ContactNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return NotFound(ex.Message);
+            }
+            catch (ContactUpdateFailedException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attenpting to update user contact.");
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "An error occurred while attempting to update the user's contact.");
+                return Problem(ex.Message);
+            }
         }
 
         [HttpDelete("{contactId}")]
