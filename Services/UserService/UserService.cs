@@ -26,7 +26,7 @@ namespace backend.Services.UserService
 
             if (httpContext is null)
             {
-                throw new NotFoundException("Token not found.");
+                throw new UserNotFoundException("Token not found.");
             }
 
             var user = await _userRepository.GetUserByToken(
@@ -36,7 +36,7 @@ namespace backend.Services.UserService
 
             if (user is null)
             {
-                throw new NotFoundException("User not found");
+                throw new UserNotFoundException("User not found");
             }
 
             return user;
