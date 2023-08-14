@@ -8,10 +8,10 @@ namespace backend.Mappers
     {
         public ContactMapper()
         {
-            CreateMap<Contact, GetUserContactModel>();
-            CreateMap<Contact, UpsertUserContactModel>();
-            CreateMap<GetUserContactModel, Contact>();
-            CreateMap<UpsertUserContactModel, Contact>();
+            CreateMap<Contact, GetUserContactModel>()
+                .ReverseMap();
+            CreateMap<Contact, UpsertUserContactModel>()
+                .ReverseMap();
         }
     }
 }

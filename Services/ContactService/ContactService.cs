@@ -41,7 +41,7 @@ namespace backend.Services.ContactService
             var response = await _contactRepository.CreateUserContact(newContact);
             if (!response)
             {
-                throw new ContactAddFailedException("Failed to add contact.");
+                throw new Exception("Failed to add contact.");
             }
             return _mapper.Map<GetUserContactModel>(newContact);
         }
@@ -58,7 +58,7 @@ namespace backend.Services.ContactService
             var isContactUpdated = await _contactRepository.UpdateUserContact(contact, newContactDetails);
             if (!isContactUpdated)
             {
-                throw new ContactUpdateFailedException("Failed to update contact.");
+                throw new Exception("Failed to update contact.");
             }
 
             var response = _mapper.Map<GetUserContactModel>(newContactDetails);
@@ -77,7 +77,7 @@ namespace backend.Services.ContactService
             var response = await _contactRepository.DeleteUserContact(contact);
             if (!response)
             {
-                throw new ContactDeleteFailedException("Failed to delete contact.");
+                throw new Exception("Failed to delete contact.");
             }
 
             return response;

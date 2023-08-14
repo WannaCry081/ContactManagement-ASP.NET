@@ -7,10 +7,10 @@ namespace backend.Mappers
     public class AuthMapper : Profile
     {
         public AuthMapper() {
-            CreateMap<User, SignUpModel>();
-            CreateMap<User, SignInModel>();
-            CreateMap<SignUpModel, User>();
-            CreateMap<SignInModel, User>();
+            CreateMap<User, SignUpModel>()
+                .ReverseMap();
+            CreateMap<User, SignInModel>()
+                .ReverseMap();
         }
     }
 }

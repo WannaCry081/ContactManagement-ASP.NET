@@ -56,7 +56,7 @@ namespace backend.Services.UserService
 
             if (!isUserUpdated)
             {
-                throw new UserUpdateFailedException("Failed to update user profile.");
+                throw new Exception("Failed to update user profile.");
             }
 
             var response = _mapper.Map<GetUserProfileModel>(newUserDetails);

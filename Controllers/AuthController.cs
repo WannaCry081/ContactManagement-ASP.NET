@@ -52,8 +52,8 @@ namespace backend.Controllers
             }
             catch (UserNotFoundException ex)
             {
-                _logger.LogWarning(ex, "An error occurred while attempting to sign in a user.");
-                return NotFound(ex.Message);
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return Unauthorized(ex.Message);
             }
             catch (UserSignInFailedException ex)
             {

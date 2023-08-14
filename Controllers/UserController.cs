@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using backend.Models.UserModels;
@@ -32,12 +31,12 @@ namespace backend.Controllers
             }
             catch (UserNotFoundException ex)
             {
-                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                _logger.LogError(ex, "An error occurred while attempting to get user information.");
                 return Unauthorized(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "An error occurred while attempting to get the user's contacts.");
+                _logger.LogCritical(ex, "An error occurred while attempting to get the user profile.");
                 return Problem(ex.Message);
             }
         }
@@ -57,17 +56,11 @@ namespace backend.Controllers
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
                 return Unauthorized(ex.Message);
             }
-            catch (UserUpdateFailedException ex)
-            {
-                _logger.LogError(ex, "An error occurred while attempting to update user profile.");
-                return BadRequest(ex.Message);
-            }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "An error occurred while attempting to get the user's contacts.");
+                _logger.LogCritical(ex, "An error occurred while attempting to update the user profile.");
                 return Problem(ex.Message);
             }
         }
-
     }
 }

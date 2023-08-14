@@ -8,12 +8,12 @@ namespace backend.Mappers
     {
         public UserMapper()
         {
-            CreateMap<User, GetUserProfileModel>();
-            CreateMap<User, UpdateUserProfileModel>();
-            CreateMap<User, UpdateUserPasswordModel>();
-            CreateMap<GetUserProfileModel, User>();
-            CreateMap<UpdateUserProfileModel, User>();
-            CreateMap<UpdateUserPasswordModel, User>();
+            CreateMap<User, GetUserProfileModel>()
+                .ReverseMap();
+            CreateMap<User, UpdateUserProfileModel>()
+                .ReverseMap();
+            CreateMap<User, UpdateUserPasswordModel>()
+                .ReverseMap();
         }
     }
 }
