@@ -1,9 +1,11 @@
 using backend.Entities;
+using backend.Models.UserModels;
 
 namespace backend.Services.UserService
 {
     public interface IUserService
     {
-        Task<User> GetUserProfile();
+        Task<User> GetUserByToken();
+        Task<GetUserProfileModel> GetUserProfile();
     }
 }

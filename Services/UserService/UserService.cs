@@ -20,7 +20,7 @@ namespace backend.Services.UserService
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(httpContext));
         }
 
-        public async Task<User> GetUserProfile()
+        public async Task<User> GetUserByToken()
         {
             var httpContext = _httpContext.HttpContext;
 
@@ -40,6 +40,12 @@ namespace backend.Services.UserService
             }
 
             return user;
+        }
+
+        public async Task<GetUserProfileModel> GetUserProfile()
+        {
+            var response = await GetUserByToken();
+            return _mapper.Map<GetUserProfileModel>(response);
         }
     }
 }
