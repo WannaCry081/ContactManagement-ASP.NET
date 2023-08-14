@@ -19,7 +19,7 @@
         </member>
         <member name="M:backend.Controllers.AuthController.SignUp(backend.Models.AuthModels.SignUpModel)">
             <summary>
-            Sign up a new user. 
+            Sign up a user. 
             </summary>
             <param name="request">The sign-up request model</param>
             <returns>A jwt token.</returns>
@@ -38,7 +38,6 @@
             
             </remarks>
             <response code="200">Successfully created an account.</response>
-            <response code="400">Invalid contact details.</response>
             <response code="409">User already exists.</response>
             <response code="500">Internal server error.</response>
         </member>
@@ -49,16 +48,20 @@
             <param name="request">The sign-in request model.</param>
             <returns>A jwt token.</returns>
             <remarks>
-                
+            Sample Request:
+            
                 POST /api/auth/signin
                 {
                     "email" : "johndoe@example.com",
                     "password" : "password123"
                 }
+            
+            Sample Response:
+                
+                $osdfoshweorij
                 
             </remarks>
             <response code="200">Successfully log in user.</response>
-            <response code="400">Invalid contact details.</response>
             <response code="401">Invalid user's password.</response>
             <response code="404">User does not exists.</response>
             <response code="500">Internal server error.</response>

@@ -28,7 +28,7 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// Sign up a new user. 
+        /// Sign up a user. 
         /// </summary>
         /// <param name="request">The sign-up request model</param>
         /// <returns>A jwt token.</returns>
@@ -47,14 +47,12 @@ namespace backend.Controllers
         /// 
         /// </remarks>
         /// <response code="200">Successfully created an account.</response>
-        /// <response code="400">Invalid contact details.</response>
         /// <response code="409">User already exists.</response>
         /// <response code="500">Internal server error.</response>
         [HttpPost("signup")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> SignUp([FromBody] SignUpModel request)
@@ -82,7 +80,8 @@ namespace backend.Controllers
         /// <param name="request">The sign-in request model.</param>
         /// <returns>A jwt token.</returns>
         /// <remarks>
-        ///     
+        /// Sample Request:
+        /// 
         ///     POST /api/auth/signin
         ///     {
         ///         "email" : "johndoe@example.com",
@@ -91,7 +90,6 @@ namespace backend.Controllers
         ///     
         /// </remarks>
         /// <response code="200">Successfully log in user.</response>
-        /// <response code="400">Invalid contact details.</response>
         /// <response code="401">Invalid user's password.</response>
         /// <response code="404">User does not exists.</response>
         /// <response code="500">Internal server error.</response>
@@ -99,7 +97,6 @@ namespace backend.Controllers
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -113,12 +110,12 @@ namespace backend.Controllers
             catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (UserSignInFailedException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to match Password.");
-                return BadRequest(ex.Message);
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex)
             {
