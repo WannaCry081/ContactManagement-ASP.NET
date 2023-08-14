@@ -1,5 +1,6 @@
 using AutoMapper;
 using backend.Entities;
+using backend.Exceptions;
 using backend.Models.ContactModels;
 using backend.Repositories.ContactRepository;
 
@@ -22,9 +23,14 @@ namespace backend.Services.ContactService
             return _mapper.Map<ICollection<GetUserContactModel>>(response);
         }
 
-        public Task<GetUserContactModel> GetUserContact(User user, int contactId)
+        public async Task<GetUserContactModel> GetUserContact(User user, int contactId)
         {
-            throw new NotImplementedException();
+            var response = await _contactRepository.GetUserContact(user.Id, contactId);
+            if (response is null)
+            {
+                throw new ContactNotFoundException("Contact not found.");
+            }
+            return _mapper.Map<GetUserContactModel>(response);
         }
 
         public Task<GetUserContactModel> CreateUserContact(User user, UpsertUserContactModel request)
