@@ -34,7 +34,7 @@ namespace backend.Controllers
                 var response = await _contactService.GetUserContacts(user);
                 return Ok(response);
             }
-            catch (NotFoundException ex)
+            catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
                 return NotFound(ex.Message);
@@ -48,9 +48,29 @@ namespace backend.Controllers
 
         [HttpGet("{contactId}")]
         [Produces("application/json")]
-        public Task<IActionResult> GetUserContact([FromRoute] int contactId)
+        public async Task<IActionResult> GetUserContact([FromRoute] int contactId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await _userService.GetUserProfile();
+                var response = await _contactService.GetUserContact(user, contactId);
+                return Ok(response);
+            }
+            catch (UserNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return NotFound(ex.Message);
+            }
+            catch (ContactNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user's contact.");
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "");
+                return Problem(ex.Message);
+            }
         }
 
         [HttpPost]
