@@ -76,9 +76,29 @@ namespace backend.Controllers
         [HttpPost]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public Task<IActionResult> CreateUserContact([FromBody] UpsertUserContactModel request)
+        public async Task<IActionResult> CreateUserContact([FromBody] UpsertUserContactModel request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var user = await _userService.GetUserProfile();
+                var response = await _contactService.CreateUserContact(user, request);
+                return Ok(response);
+            }
+            catch (UserNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return NotFound(ex.Message);
+            }
+            catch (ContactAddFailedException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to add user's contact.");
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "An error occurred while attempting to get the user's contact.");
+                return Problem(ex.Message);
+            }
         }
 
         [HttpPut("{contactId}")]
