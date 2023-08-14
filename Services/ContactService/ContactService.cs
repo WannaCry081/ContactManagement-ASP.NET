@@ -3,7 +3,6 @@ using backend.Entities;
 using backend.Exceptions;
 using backend.Models.ContactModels;
 using backend.Repositories.ContactRepository;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace backend.Services.ContactService
 {
