@@ -68,7 +68,7 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "");
+                _logger.LogError(ex, "An error occurred while attempting to get user's contact.");
                 return Problem(ex.Message);
             }
         }
@@ -91,7 +91,7 @@ namespace backend.Controllers
             }
             catch (ContactAddFailedException ex)
             {
-                _logger.LogError(ex, "An error occurred while attempting to add user's contact.");
+                _logger.LogError(ex, "An error occurred while attempting to create user's contact.");
                 return NotFound(ex.Message);
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ namespace backend.Controllers
             }
             catch (ContactUpdateFailedException ex)
             {
-                _logger.LogError(ex, "An error occurred while attenpting to update user contact.");
+                _logger.LogError(ex, "An error occurred while attenpting to update user's contact.");
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
@@ -142,11 +142,26 @@ namespace backend.Controllers
             {
                 var user = await _userService.GetUserProfile();
                 var response = await _contactService.DeleteUserContact(user, contactId);
-                return Ok(response);
+                return Ok("Successfully deleted user's contact.");
+            }
+            catch (UserNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return Unauthorized(ex.Message);
+            }
+            catch (ContactNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return NotFound(ex.Message);
+            }
+            catch (ContactDeleteFailedException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attenpting to delete user contact.");
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "");
+                _logger.LogError(ex, "An error occurred while attenpting to delete user contact.");
                 return Problem(ex.Message);
             }
         }

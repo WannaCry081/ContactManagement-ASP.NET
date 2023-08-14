@@ -56,13 +56,15 @@ namespace backend.Services.ContactService
             }
 
             var newContactDetails = _mapper.Map<Contact>(request);
-            var response = await _contactRepository.UpdateUserContact(contact, newContactDetails);
-            if (!response)
+            var isContactUpdated = await _contactRepository.UpdateUserContact(contact, newContactDetails);
+            if (!isContactUpdated)
             {
                 throw new ContactUpdateFailedException("Failed to update contact.");
             }
 
-            return _mapper.Map<GetUserContactModel>(newContactDetails);
+            var response = _mapper.Map<GetUserContactModel>(newContactDetails);
+            response.Id = contact.Id;
+            return response;
         }
 
         public async Task<bool> DeleteUserContact(User user, int contactId)
