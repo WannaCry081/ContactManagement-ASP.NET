@@ -1,5 +1,6 @@
 using AutoMapper;
 using System.Security.Claims;
+using backend.Entities;
 using backend.Exceptions;
 using backend.Repositories.UserRepository;
 using backend.Models.UserModels;
@@ -19,7 +20,7 @@ namespace backend.Services.UserService
             _userRepository = userRepository ?? throw new ArgumentNullException(nameof(httpContext));
         }
 
-        public async Task<GetUserProfileModel> GetUserProfile()
+        public async Task<User> GetUserProfile()
         {
             var httpContext = _httpContext.HttpContext;
 
@@ -38,7 +39,7 @@ namespace backend.Services.UserService
                 throw new NotFoundException("User not found");
             }
 
-            return _mapper.Map<GetUserProfileModel>(user);
+            return user;
         }
     }
 }
