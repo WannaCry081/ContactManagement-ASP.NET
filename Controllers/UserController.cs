@@ -1,5 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using backend.Models.UserModels;
 using backend.Services.UserService;
 using backend.Exceptions;
 
@@ -30,12 +32,12 @@ namespace backend.Controllers
             }
             catch (UserNotFoundException ex)
             {
-                _logger.LogError(ex, "");
-                return NotFound(ex.Message);
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, "");
+                _logger.LogCritical(ex, "An error occurred while attempting to get the user's contacts.");
                 return Problem(ex.Message);
             }
         }
@@ -43,9 +45,28 @@ namespace backend.Controllers
         [HttpPut]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public Task<IActionResult> UpdateUserProfile()
+        public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateUserProfileModel request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var response = await _userService.UpdateUserProfile(request);
+                return Ok(response);
+            }
+            catch (UserNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return Unauthorized(ex.Message);
+            }
+            catch (UserUpdateFailedException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to update user profile.");
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "An error occurred while attempting to get the user's contacts.");
+                return Problem(ex.Message);
+            }
         }
 
     }
