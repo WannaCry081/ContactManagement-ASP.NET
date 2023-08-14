@@ -7,12 +7,22 @@ using backend.Utils;
 
 namespace backend.Services.AuthService
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AuthService : IAuthService
     {
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly IAuthRepository _authRepository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="configuration"></param>
+        /// <param name="authRepository"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public AuthService(IMapper mapper, IConfiguration configuration, IAuthRepository authRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -20,6 +30,12 @@ namespace backend.Services.AuthService
             _authRepository = authRepository ?? throw new ArgumentNullException(nameof(authRepository));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="UserSignUpFailedException"></exception>
         public async Task<string> SignUp(SignUpModel request)
         {
             var newUser = _mapper.Map<User>(request);
@@ -40,6 +56,13 @@ namespace backend.Services.AuthService
             return TokenGenerator.AccessToken(newUser, _configuration);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="UserNotFoundException"></exception>
+        /// <exception cref="UserSignInFailedException"></exception>
         public async Task<string> SignIn(SignInModel request)
         {
             var user = await _authRepository.GetUserByEmail(request.Email);
@@ -56,6 +79,11 @@ namespace backend.Services.AuthService
             return TokenGenerator.AccessToken(user, _configuration);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
         private void HashPasword(User user, string password)
         {
             string passwordSalt = BCrypt.Net.BCrypt.GenerateSalt();

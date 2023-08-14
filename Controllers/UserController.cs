@@ -6,6 +6,9 @@ using backend.Exceptions;
 
 namespace backend.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Authorize]
     [ApiController]
     [Route("/api/user")]
@@ -14,12 +17,22 @@ namespace backend.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly IUserService _userService;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="userService"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public UserController(ILogger<UserController> logger, IUserService userService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Produces("application/json")]
         public async Task<IActionResult> GetUserProfile()
@@ -41,6 +54,11 @@ namespace backend.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPut]
         [Consumes("application/json")]
         [Produces("application/json")]

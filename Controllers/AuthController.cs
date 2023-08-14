@@ -31,7 +31,7 @@ namespace backend.Controllers
         /// Sign up a new user. 
         /// </summary>
         /// <param name="request">The sign-up request model</param>
-        /// <returns>return a jwt token.</returns>
+        /// <returns>A jwt token.</returns>
         /// <remarks>
         /// Sample Request:
         /// 
@@ -80,7 +80,7 @@ namespace backend.Controllers
         /// Sign in a user. 
         /// </summary>
         /// <param name="request">The sign-in request model.</param>
-        /// <returns>returns a jwt token.</returns>
+        /// <returns>A jwt token.</returns>
         /// <remarks>
         ///     
         ///     POST /api/auth/signin

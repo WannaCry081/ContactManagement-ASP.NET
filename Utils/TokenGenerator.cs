@@ -6,8 +6,17 @@ using backend.Entities;
 
 namespace backend.Utils
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TokenGenerator
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static string AccessToken(User user, IConfiguration configuration)
         {
             List<Claim> claims = new()

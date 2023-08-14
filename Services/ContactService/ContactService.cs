@@ -6,23 +6,44 @@ using backend.Repositories.ContactRepository;
 
 namespace backend.Services.ContactService
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ContactService : IContactService
     {
         private readonly IMapper _mapper;
         private readonly IContactRepository _contactRepository;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mapper"></param>
+        /// <param name="contactRepository"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public ContactService(IMapper mapper, IContactRepository contactRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _contactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public async Task<ICollection<GetUserContactModel>> GetUserContacts(User user)
         {
             var response = await _contactRepository.GetUserContacts(user.Id);
             return _mapper.Map<ICollection<GetUserContactModel>>(response);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="contactId"></param>
+        /// <returns></returns>
+        /// <exception cref="ContactNotFoundException"></exception>
         public async Task<GetUserContactModel> GetUserContact(User user, int contactId)
         {
             var response = await _contactRepository.GetUserContact(user.Id, contactId);
@@ -33,6 +54,13 @@ namespace backend.Services.ContactService
             return _mapper.Map<GetUserContactModel>(response);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task<GetUserContactModel> CreateUserContact(User user, UpsertUserContactModel request)
         {
             var newContact = _mapper.Map<Contact>(request);
@@ -46,6 +74,15 @@ namespace backend.Services.ContactService
             return _mapper.Map<GetUserContactModel>(newContact);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="contactId"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <exception cref="ContactNotFoundException"></exception>
+        /// <exception cref="Exception"></exception>
         public async Task<GetUserContactModel> UpdateUserContact(User user, int contactId, UpsertUserContactModel request)
         {
             var contact = await _contactRepository.GetUserContact(user.Id, contactId);
@@ -66,6 +103,14 @@ namespace backend.Services.ContactService
             return response;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="contactId"></param>
+        /// <returns></returns>
+        /// <exception cref="ContactNotFoundException"></exception>
+        /// <exception cref="Exception"></exception>
         public async Task<bool> DeleteUserContact(User user, int contactId)
         {
             var contact = await _contactRepository.GetUserContact(user.Id, contactId);

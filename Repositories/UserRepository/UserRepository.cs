@@ -4,15 +4,29 @@ using backend.Entities;
 
 namespace backend.Repositories.UserRepository
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class UserRepository : IUserRepository
     {
         private readonly DataContext _context;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public UserRepository(DataContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public async Task<User?> GetUserByToken(int userId, string email)
         {
             return await _context.Users.Where(
@@ -20,6 +34,12 @@ namespace backend.Repositories.UserRepository
             ).FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="newUserDetails"></param>
+        /// <returns></returns>
         public async Task<bool> UpdateUserProfile(User user, User newUserDetails) {
             user.FirstName = newUserDetails.FirstName;
             user.LastName = newUserDetails.LastName;

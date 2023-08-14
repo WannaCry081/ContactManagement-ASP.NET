@@ -4,6 +4,392 @@
         <name>backend</name>
     </assembly>
     <members>
+        <member name="T:backend.Controllers.AuthController">
+            <summary>
+            Controller for handling user authentication.
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.AuthController.#ctor(Microsoft.Extensions.Logging.ILogger{backend.Controllers.AuthController},backend.Services.AuthService.IAuthService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:backend.Controllers.AuthController"/> class.
+            </summary>
+            <param name="logger">The logger instance.</param>
+            <param name="authService">The authentication service.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:backend.Controllers.AuthController.SignUp(backend.Models.AuthModels.SignUpModel)">
+            <summary>
+            Sign up a new user. 
+            </summary>
+            <param name="request">The sign-up request model</param>
+            <returns>A jwt token.</returns>
+            <remarks>
+            Sample Request:
+            
+                POST /api/auth/signup
+                {
+                    "firstName": "John",
+                    "lastName" : "Doe",
+                    "username" : "JohnDoe123",
+                    "email" : "johndoe@example.com",
+                    "password" : "password123",
+                    "confirmPassword" : "password123"
+                }
+            
+            </remarks>
+            <response code="200">Successfully created an account.</response>
+            <response code="400">Invalid contact details.</response>
+            <response code="409">User already exists.</response>
+            <response code="500">Internal server error.</response>
+        </member>
+        <member name="M:backend.Controllers.AuthController.SignIn(backend.Models.AuthModels.SignInModel)">
+            <summary>
+            Sign in a user. 
+            </summary>
+            <param name="request">The sign-in request model.</param>
+            <returns>A jwt token.</returns>
+            <remarks>
+                
+                POST /api/auth/signin
+                {
+                    "email" : "johndoe@example.com",
+                    "password" : "password123"
+                }
+                
+            </remarks>
+            <response code="200">Successfully log in user.</response>
+            <response code="400">Invalid contact details.</response>
+            <response code="401">Invalid user's password.</response>
+            <response code="404">User does not exists.</response>
+            <response code="500">Internal server error.</response>
+        </member>
+        <member name="T:backend.Controllers.ContactController">
+            <summary>
+            Controller for handling User's Contact Information
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.ContactController.#ctor(Microsoft.Extensions.Logging.ILogger{backend.Controllers.ContactController},backend.Services.ContactService.IContactService,backend.Services.UserService.IUserService)">
+            <summary>
+            Initializes a new instance of the <see cref="T:backend.Controllers.ContactController"/> class.
+            </summary>
+            <param name="logger">The logger instance.</param>
+            <param name="contactService">The contact service.</param>
+            <param name="userService">The user service.</param> 
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:backend.Controllers.ContactController.GetUserContacts">
+            <summary>
+            Get user's contact list.
+            </summary>
+            <returns>A list of user's contacts.</returns>
+            <remarks>
+                
+                GET /api/contact
+            
+            </remarks>
+            <response code="200">Successfully returns list of user's contacts.</response>
+            <response code="401">Unauthorized request.</response>
+            <response code="404">User not found.</response>
+            <response code="500">Internal server error.</response>
+        </member>
+        <member name="M:backend.Controllers.ContactController.GetUserContact(System.Int32)">
+            <summary>
+            Get user's specific contact information.
+            </summary>
+            <param name="contactId">The ID of the specific contact.</param>
+            <returns>A response containing user's contact information.</returns>
+            <remarks>
+            
+                GET /api/contact/1
+                
+            </remarks>
+            <response code="200">Returns the user's contact information.</response>
+            <response code="401">Unauthorized request.</response>
+            <response code="404">Contact with the specified ID not found.</response>
+            <response code="500">Internal server error.</response>
+        </member>
+        <member name="M:backend.Controllers.ContactController.CreateUserContact(backend.Models.ContactModels.UpsertUserContactModel)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <remarks>
+                
+                POST /api/contact 
+                {
+                    "firstName" : "John", 
+                    "lastName" : "Doe", 
+                    "email" : "johndoe@example.com",
+                    "phoneNo" : "09123456789",
+                    "address" : "USA"
+                }
+                
+            </remarks>
+        </member>
+        <member name="M:backend.Controllers.ContactController.UpdateUserContact(System.Int32,backend.Models.ContactModels.UpsertUserContactModel)">
+            <summary>
+            
+            </summary>
+            <param name="contactId"></param>
+            <param name="request"></param>
+            <returns></returns>
+            <remarks>
+            
+                PUT /api/contact/1
+                {
+                    "firstName" : "John", 
+                    "lastName" : "Doe", 
+                    "email" : "johndoe@example.com",
+                    "phoneNo" : "09123456789",
+                    "address" : "USA"
+                }
+                
+            </remarks>
+        </member>
+        <member name="M:backend.Controllers.ContactController.DeleteUserContact(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="contactId"></param>
+            <returns></returns>
+            <remarks>
+                
+                DELETE /api/contact/1
+                
+            </remarks>
+        </member>
+        <member name="T:backend.Controllers.UserController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Controllers.UserController.#ctor(Microsoft.Extensions.Logging.ILogger{backend.Controllers.UserController},backend.Services.UserService.IUserService)">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+            <param name="userService"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:backend.Controllers.UserController.GetUserProfile">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.UserController.UpdateUserProfile(backend.Models.UserModels.UpdateUserProfileModel)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Data.DataContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Data.DataContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{backend.Data.DataContext})">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:backend.Data.DataContext.Users">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Data.DataContext.Contacts">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Entities.Contact">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.FirstName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.LastName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.PhoneNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.Address">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.CreatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.UpdatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Entities.User">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.FirstName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.LastName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.PasswordHash">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.PasswordSalt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.CreatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.UpdatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Entities.User.Contacts">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Exceptions.ContactNotFoundException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Exceptions.ContactNotFoundException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:backend.Exceptions.UserNotFoundException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Exceptions.UserNotFoundException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:backend.Exceptions.UserSignInFailedException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Exceptions.UserSignInFailedException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:backend.Exceptions.UserSignUpFailedException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Exceptions.UserSignUpFailedException.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:backend.Mappers.AuthMapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Mappers.AuthMapper.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Mappers.ContactMapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Mappers.ContactMapper.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Mappers.UserMapper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Mappers.UserMapper.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:backend.Migrations.InitialCreate">
             <inheritdoc />
         </member>
@@ -27,6 +413,623 @@
         </member>
         <member name="M:backend.Migrations.AddContactsTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
+        </member>
+        <member name="T:backend.Models.AuthModels.SignInModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.AuthModels.SignInModel.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.AuthModels.SignInModel.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Models.AuthModels.SignUpModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.AuthModels.SignUpModel.FirstName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.AuthModels.SignUpModel.LastName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.AuthModels.SignUpModel.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.AuthModels.SignUpModel.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.AuthModels.SignUpModel.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.AuthModels.SignUpModel.ConfirmPassword">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Models.ContactModels.GetUserContactModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.FirstName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.LastName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.PhoneNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.Address">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Models.ContactModels.UpsertUserContactModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.FirstName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.LastName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.PhoneNo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.Address">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Models.UserModels.GetUserProfileModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.GetUserProfileModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.GetUserProfileModel.FirstName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.GetUserProfileModel.LastName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.GetUserProfileModel.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.GetUserProfileModel.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Models.UserModels.UpdateUserPasswordModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.UpdateUserPasswordModel.OldPassword">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.UpdateUserPasswordModel.NewPassword">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.UpdateUserPasswordModel.ConfirmNewPassword">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Models.UserModels.UpdateUserProfileModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.UpdateUserProfileModel.FirstName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.UpdateUserProfileModel.LastName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:backend.Models.UserModels.UpdateUserProfileModel.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:backend.Repositories.AuthRepository.AuthRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.AuthRepository.AuthRepository.#ctor(backend.Data.DataContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:backend.Repositories.AuthRepository.AuthRepository.IsUserExists(backend.Entities.User)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthRepository.AuthRepository.AddNewUser(backend.Entities.User)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthRepository.AuthRepository.GetUserByEmail(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Repositories.AuthRepository.IAuthRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.AuthRepository.IAuthRepository.IsUserExists(backend.Entities.User)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthRepository.IAuthRepository.AddNewUser(backend.Entities.User)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.AuthRepository.IAuthRepository.GetUserByEmail(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Repositories.ContactRepository.ContactRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.ContactRepository.#ctor(backend.Data.DataContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.ContactRepository.GetUserContacts(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.ContactRepository.GetUserContact(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <param name="contactId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.ContactRepository.CreateUserContact(backend.Entities.Contact)">
+            <summary>
+            
+            </summary>
+            <param name="contact"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.ContactRepository.UpdateUserContact(backend.Entities.Contact,backend.Entities.Contact)">
+            <summary>
+            
+            </summary>
+            <param name="contact"></param>
+            <param name="newContactDetails"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.ContactRepository.DeleteUserContact(backend.Entities.Contact)">
+            <summary>
+            
+            </summary>
+            <param name="contact"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Repositories.ContactRepository.IContactRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.IContactRepository.GetUserContacts(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.IContactRepository.GetUserContact(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <param name="contactId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.IContactRepository.CreateUserContact(backend.Entities.Contact)">
+            <summary>
+            
+            </summary>
+            <param name="contact"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.IContactRepository.UpdateUserContact(backend.Entities.Contact,backend.Entities.Contact)">
+            <summary>
+            
+            </summary>
+            <param name="contact"></param>
+            <param name="newContactDetails"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.IContactRepository.DeleteUserContact(backend.Entities.Contact)">
+            <summary>
+            
+            </summary>
+            <param name="contact"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Repositories.UserRepository.IUserRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.UserRepository.IUserRepository.GetUserByToken(System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.UserRepository.IUserRepository.UpdateUserProfile(backend.Entities.User,backend.Entities.User)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="newUserDetails"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Repositories.UserRepository.UserRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.UserRepository.UserRepository.#ctor(backend.Data.DataContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:backend.Repositories.UserRepository.UserRepository.GetUserByToken(System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userId"></param>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Repositories.UserRepository.UserRepository.UpdateUserProfile(backend.Entities.User,backend.Entities.User)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="newUserDetails"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Services.AuthService.AuthService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.AuthService.AuthService.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration,backend.Repositories.AuthRepository.IAuthRepository)">
+            <summary>
+            
+            </summary>
+            <param name="mapper"></param>
+            <param name="configuration"></param>
+            <param name="authRepository"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:backend.Services.AuthService.AuthService.SignUp(backend.Models.AuthModels.SignUpModel)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:backend.Exceptions.UserSignUpFailedException"></exception>
+        </member>
+        <member name="M:backend.Services.AuthService.AuthService.SignIn(backend.Models.AuthModels.SignInModel)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:backend.Exceptions.UserNotFoundException"></exception>
+            <exception cref="T:backend.Exceptions.UserSignInFailedException"></exception>
+        </member>
+        <member name="M:backend.Services.AuthService.AuthService.HashPasword(backend.Entities.User,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="password"></param>
+        </member>
+        <member name="T:backend.Services.AuthService.IAuthService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.AuthService.IAuthService.SignUp(backend.Models.AuthModels.SignUpModel)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Services.AuthService.IAuthService.SignIn(backend.Models.AuthModels.SignInModel)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Services.ContactService.ContactService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.ContactService.ContactService.#ctor(AutoMapper.IMapper,backend.Repositories.ContactRepository.IContactRepository)">
+            <summary>
+            
+            </summary>
+            <param name="mapper"></param>
+            <param name="contactRepository"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:backend.Services.ContactService.ContactService.GetUserContacts(backend.Entities.User)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Services.ContactService.ContactService.GetUserContact(backend.Entities.User,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="contactId"></param>
+            <returns></returns>
+            <exception cref="T:backend.Exceptions.ContactNotFoundException"></exception>
+        </member>
+        <member name="M:backend.Services.ContactService.ContactService.CreateUserContact(backend.Entities.User,backend.Models.ContactModels.UpsertUserContactModel)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:backend.Services.ContactService.ContactService.UpdateUserContact(backend.Entities.User,System.Int32,backend.Models.ContactModels.UpsertUserContactModel)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="contactId"></param>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:backend.Exceptions.ContactNotFoundException"></exception>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:backend.Services.ContactService.ContactService.DeleteUserContact(backend.Entities.User,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="contactId"></param>
+            <returns></returns>
+            <exception cref="T:backend.Exceptions.ContactNotFoundException"></exception>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:backend.Services.ContactService.IContactService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.ContactService.IContactService.GetUserContacts(backend.Entities.User)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Services.ContactService.IContactService.GetUserContact(backend.Entities.User,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="contactId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Services.ContactService.IContactService.CreateUserContact(backend.Entities.User,backend.Models.ContactModels.UpsertUserContactModel)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Services.ContactService.IContactService.UpdateUserContact(backend.Entities.User,System.Int32,backend.Models.ContactModels.UpsertUserContactModel)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="contactId"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Services.ContactService.IContactService.DeleteUserContact(backend.Entities.User,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="contactId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Services.UserService.IUserService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.UserService.IUserService.GetUserByToken">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Services.UserService.IUserService.GetUserProfile">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Services.UserService.IUserService.UpdateUserProfile(backend.Models.UserModels.UpdateUserProfileModel)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Services.UserService.UserService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.UserService.UserService.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Http.IHttpContextAccessor,backend.Repositories.UserRepository.IUserRepository)">
+            <summary>
+            
+            </summary>
+            <param name="mapper"></param>
+            <param name="httpContext"></param>
+            <param name="userRepository"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:backend.Services.UserService.UserService.GetUserByToken">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+            <exception cref="T:backend.Exceptions.UserNotFoundException"></exception>
+        </member>
+        <member name="M:backend.Services.UserService.UserService.GetUserProfile">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Services.UserService.UserService.UpdateUserProfile(backend.Models.UserModels.UpdateUserProfileModel)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:backend.Utils.TokenGenerator">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Utils.TokenGenerator.AccessToken(backend.Entities.User,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="configuration"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

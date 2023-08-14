@@ -7,6 +7,9 @@ using backend.Models.ContactModels;
 
 namespace backend.Controllers
 {
+    /// <summary>
+    /// Controller for handling User's Contact Information
+    /// </summary>
     [Authorize]
     [ApiController]
     [Route("/api/contact")]
@@ -16,6 +19,13 @@ namespace backend.Controllers
         private readonly IContactService _contactService;
         private readonly IUserService _userService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContactController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger instance.</param>
+        /// <param name="contactService">The contact service.</param>
+        /// <param name="userService">The user service.</param> 
+        /// <exception cref="ArgumentNullException"></exception>
         public ContactController(ILogger<ContactController> logger, IContactService contactService, IUserService userService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -23,8 +33,25 @@ namespace backend.Controllers
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
+        /// <summary>
+        /// Get user's contact list.
+        /// </summary>
+        /// <returns>A list of user's contacts.</returns>
+        /// <remarks>
+        ///     
+        ///     GET /api/contact
+        /// 
+        /// </remarks>
+        /// <response code="200">Successfully returns list of user's contacts.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="404">User not found.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpGet]
         [Produces("application/json")]
+        [ProducesResponseType(typeof(GetUserContactModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUserContacts()
         {
             try
@@ -44,7 +71,21 @@ namespace backend.Controllers
                 return Problem(ex.Message);
             }
         }
-
+        
+        /// <summary>
+        /// Get user's specific contact information.
+        /// </summary>
+        /// <param name="contactId">The ID of the specific contact.</param>
+        /// <returns>A response containing user's contact information.</returns>
+        /// <remarks>
+        /// 
+        ///     GET /api/contact/1
+        ///     
+        /// </remarks>
+        /// <response code="200">Returns the user's contact information.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="404">Contact with the specified ID not found.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpGet("{contactId}")]
         [Produces("application/json")]
         public async Task<IActionResult> GetUserContact([FromRoute] int contactId)
@@ -72,6 +113,23 @@ namespace backend.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <remarks>
+        ///     
+        ///     POST /api/contact 
+        ///     {
+        ///         "firstName" : "John", 
+        ///         "lastName" : "Doe", 
+        ///         "email" : "johndoe@example.com",
+        ///         "phoneNo" : "09123456789",
+        ///         "address" : "USA"
+        ///     }
+        ///     
+        /// </remarks>
         [HttpPost]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -95,6 +153,24 @@ namespace backend.Controllers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// 
+        ///     PUT /api/contact/1
+        ///     {
+        ///         "firstName" : "John", 
+        ///         "lastName" : "Doe", 
+        ///         "email" : "johndoe@example.com",
+        ///         "phoneNo" : "09123456789",
+        ///         "address" : "USA"
+        ///     }
+        ///     
+        /// </remarks>
         [HttpPut("{contactId}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -122,7 +198,17 @@ namespace backend.Controllers
                 return Problem(ex.Message);
             }
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <returns></returns>
+        /// <remarks>
+        ///     
+        ///     DELETE /api/contact/1
+        ///     
+        /// </remarks>
         [HttpDelete("{contactId}")]
         [Produces("application/json")]
         public async Task<IActionResult> DeleteUserContact([FromRoute] int contactId)

@@ -1,4 +1,5 @@
 using System.Text;
+using System.Reflection;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +14,6 @@ using backend.Services.UserService;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -39,6 +39,21 @@ builder.Services.AddSwaggerGen(options =>
     });
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
+
+    options.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Version = "v1",
+        Title = "Contact Management System API",
+        Description = "A simple Contact Management System API showcasing basic CRUD operations.",
+        Contact = new OpenApiContact()
+        {
+            Name = "Lirae Que A. Data",
+            Url = new Uri("https://github.com/TheDayDreamer01")
+        }
+    });
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
 });
 builder.Services.AddAuthentication().AddJwtBearer(options =>
 {
