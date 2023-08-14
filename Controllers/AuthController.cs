@@ -50,7 +50,7 @@ namespace backend.Controllers
                 var response = await _authService.SignIn(request);
                 return Ok(response);
             }
-            catch (NotFoundException ex)
+            catch (UserNotFoundException ex)
             {
                 _logger.LogWarning(ex, "An error occurred while attempting to sign in a user.");
                 return NotFound(ex.Message);

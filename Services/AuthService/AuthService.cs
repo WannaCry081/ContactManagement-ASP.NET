@@ -45,7 +45,7 @@ namespace backend.Services.AuthService
             var user = await _authRepository.GetUserByEmail(request.Email);
             if (user is null)
             {
-                throw new NotFoundException("user not found.");
+                throw new UserNotFoundException("user not found.");
             }
 
             if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
