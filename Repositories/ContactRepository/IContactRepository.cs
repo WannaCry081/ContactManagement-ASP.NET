@@ -7,7 +7,7 @@ namespace backend.Repositories.ContactRepository
         Task<ICollection<Contact>> GetUserContacts(int userId);
         Task<Contact?> GetUserContact(int userId, int contactId);
         Task<bool> CreateUserContact(Contact contact);
-        // Task<bool> UpdateUserContact();
+        Task<bool> UpdateUserContact(Contact contact, Contact newContactDetails);
         // Task<bool> DeleteUserContact();
     }
 }

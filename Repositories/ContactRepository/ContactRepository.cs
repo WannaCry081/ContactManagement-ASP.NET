@@ -34,5 +34,18 @@ namespace backend.Repositories.ContactRepository
             var result = await _context.SaveChangesAsync();
             return result > 0;
         }
+
+        public async Task<bool> UpdateUserContact(Contact contact, Contact newContactDetails)
+        {
+            contact.FirstName = newContactDetails.FirstName;
+            contact.LastName = newContactDetails.LastName;
+            contact.Email = newContactDetails.Email;
+            contact.PhoneNo = newContactDetails.PhoneNo;
+            contact.Address = newContactDetails.Address;
+            contact.UpdatedAt = DateTime.Now;
+
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
     }
 }
