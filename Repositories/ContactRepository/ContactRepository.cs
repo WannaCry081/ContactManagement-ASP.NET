@@ -47,5 +47,12 @@ namespace backend.Repositories.ContactRepository
             var result = await _context.SaveChangesAsync();
             return result > 0;
         }
+
+        public async Task<bool> DeleteUserContact(Contact contact)
+        {
+            _context.Contacts.Remove(contact);
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
     }
 }

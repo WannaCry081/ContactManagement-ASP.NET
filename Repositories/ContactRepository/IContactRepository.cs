@@ -8,6 +8,6 @@ namespace backend.Repositories.ContactRepository
         Task<Contact?> GetUserContact(int userId, int contactId);
         Task<bool> CreateUserContact(Contact contact);
         Task<bool> UpdateUserContact(Contact contact, Contact newContactDetails);
-        // Task<bool> DeleteUserContact();
+        Task<bool> DeleteUserContact(Contact contact);
     }
 }
