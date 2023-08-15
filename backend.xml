@@ -55,10 +55,6 @@
                     "email" : "johndoe@example.com",
                     "password" : "password123"
                 }
-            
-            Sample Response:
-                
-                $osdfoshweorij
                 
             </remarks>
             <response code="200">Successfully log in user.</response>
@@ -86,12 +82,13 @@
             </summary>
             <returns>A list of user's contacts.</returns>
             <remarks>
+            Sample Request:
                 
                 GET /api/contact
             
             </remarks>
             <response code="200">Successfully returns list of user's contacts.</response>
-            <response code="401">Unauthorized request.</response>
+            <response code="403">Invalid jwt token.</response>
             <response code="404">User not found.</response>
             <response code="500">Internal server error.</response>
         </member>
@@ -102,22 +99,24 @@
             <param name="contactId">The ID of the specific contact.</param>
             <returns>A response containing user's contact information.</returns>
             <remarks>
+            Sample Request:
             
                 GET /api/contact/1
                 
             </remarks>
             <response code="200">Returns the user's contact information.</response>
-            <response code="401">Unauthorized request.</response>
-            <response code="404">Contact with the specified ID not found.</response>
+            <response code="403">Invalid jwt token.</response>
+            <response code="404">User and Contact with the specified ID not found.</response>
             <response code="500">Internal server error.</response>
         </member>
         <member name="M:backend.Controllers.ContactController.CreateUserContact(backend.Models.ContactModels.UpsertUserContactModel)">
             <summary>
-            
+            Create new user's contact information.
             </summary>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="request">The contact details to be created.</param>
+            <returns>The newly created user's contact.</returns>
             <remarks>
+            Sample Request:
                 
                 POST /api/contact 
                 {
@@ -129,15 +128,20 @@
                 }
                 
             </remarks>
+            <response code="200">Returns the new user's contact.</response>
+            <response code="403">Invalid jwt token.</response>
+            <response code="404">User not found.</response>
+            <response code="500">Internal server error.</response>
         </member>
         <member name="M:backend.Controllers.ContactController.UpdateUserContact(System.Int32,backend.Models.ContactModels.UpsertUserContactModel)">
             <summary>
-            
+            Updates user's contact information.
             </summary>
-            <param name="contactId"></param>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="contactId">The ID of the specific contact.</param>
+            <param name="request">The contact details to be updated.</param>
+            <returns>The updated user's contact.</returns>
             <remarks>
+            Sample Request:
             
                 PUT /api/contact/1
                 {
@@ -149,248 +153,282 @@
                 }
                 
             </remarks>
+            <response code="200">Returns the new user's contact information.</response>
+            <response code="403">Invalid jwt token.</response>
+            <response code="404">User and Contact with the specified ID not found.</response>
+            <response code="500">Internal server error.</response>
         </member>
         <member name="M:backend.Controllers.ContactController.DeleteUserContact(System.Int32)">
             <summary>
-            
+            Deletes user's contact information.
             </summary>
-            <param name="contactId"></param>
-            <returns></returns>
+            <param name="contactId">The ID of the specific contact.</param>
+            <returns>Returns a success message.</returns>
             <remarks>
+            Sample Request:
                 
                 DELETE /api/contact/1
                 
             </remarks>
+            <response code="200">User's contact successfully deleted.</response>
+            <response code="403">Invalid jwt token.</response>
+            <response code="404">User and Contact with the specified ID not found.</response>
+            <response code="500">Internal server error.</response>
         </member>
         <member name="T:backend.Controllers.UserController">
             <summary>
-            
+            Controller for handling User's Profile
             </summary>
         </member>
         <member name="M:backend.Controllers.UserController.#ctor(Microsoft.Extensions.Logging.ILogger{backend.Controllers.UserController},backend.Services.UserService.IUserService)">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Controllers.UserController"/> 
             </summary>
-            <param name="logger"></param>
-            <param name="userService"></param>
+            <param name="logger">The logger instance.</param>
+            <param name="userService">The user service.</param> 
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="M:backend.Controllers.UserController.GetUserProfile">
             <summary>
-            
+            Get user's profile.
             </summary>
-            <returns></returns>
+            <returns>The user's profile.</returns>
+            <remarks>
+            Sample Request:
+            
+                GET /api/user  
+                 
+            </remarks>
+            <response code="200">Returns the user's profile.</response>
+            <response code="403">Invalid jwt token.</response>
+            <response code="404">User not found.</response>
+            <response code="500">Internal server error.</response>
         </member>
         <member name="M:backend.Controllers.UserController.UpdateUserProfile(backend.Models.UserModels.UpdateUserProfileModel)">
             <summary>
-            
+            Update user's profile.
             </summary>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="request">The new user's profile details to be updated.</param>
+            <returns>The new updated user's profile.</returns>
+            <remarks>
+            Sample Request:
+            
+                PUT /api/user
+                {
+                    "firstName" : "John",
+                    "lastName" : "Doe",
+                    "userName" : "JohnDoe123"
+                }
+            
+            </remarks>
+            <response code="200">Returns the updated user's profile.</response>
+            <response code="403">Invalid jwt token.</response>
+            <response code="404">User not found.</response>
+            <response code="500">Internal server error.</response>
         </member>
         <member name="T:backend.Data.DataContext">
             <summary>
-            
+            Represents the database context for the application.
             </summary>
         </member>
         <member name="M:backend.Data.DataContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{backend.Data.DataContext})">
             <summary>
-            
+            Initializes a new instance of the `DataContext` class.
             </summary>
-            <param name="options"></param>
+            <param name="options">The DbContext options.</param>
         </member>
         <member name="P:backend.Data.DataContext.Users">
             <summary>
-            
+            Gets or sets the DbSet of users.
             </summary>
         </member>
         <member name="P:backend.Data.DataContext.Contacts">
             <summary>
-            
+            Gets or sets the DbSet of contacts.
             </summary>
         </member>
         <member name="T:backend.Entities.Contact">
             <summary>
-            
+            Entity class representing user contacts.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.Id">
             <summary>
-            
+            Gets or sets the ID of the contact.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.UserId">
             <summary>
-            
+            Gets or sets the ID of the user associated with the contact.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.User">
             <summary>
-            
+            Gets or sets the user associated with the contact.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.FirstName">
             <summary>
-            
+            Gets or sets the first name of the contact.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.LastName">
             <summary>
-            
+            Gets or sets the last name of the contact.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.Email">
             <summary>
-            
+            Gets or sets the email of the contact.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.PhoneNo">
             <summary>
-            
+            Gets or sets the phone number of the contact.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.Address">
             <summary>
-            
+            Gets or sets the address of the contact.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.CreatedAt">
             <summary>
-            
+            Gets or sets the timestamp of when the contact was created.
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.UpdatedAt">
             <summary>
-            
+            Gets or sets the timestamp of when the contact was last updated.
             </summary>
         </member>
         <member name="T:backend.Entities.User">
             <summary>
-            
+            Entity class representing user data.
             </summary>
         </member>
         <member name="P:backend.Entities.User.Id">
             <summary>
-            
+            Gets or sets the ID of the user.
             </summary>
         </member>
         <member name="P:backend.Entities.User.FirstName">
             <summary>
-            
+            Gets or sets the first name of the user.
             </summary>
         </member>
         <member name="P:backend.Entities.User.LastName">
             <summary>
-            
+            Gets or sets the last name of the user.
             </summary>
         </member>
         <member name="P:backend.Entities.User.UserName">
             <summary>
-            
+            Gets or sets the username of the user.
             </summary>
         </member>
         <member name="P:backend.Entities.User.Email">
             <summary>
-            
+            Gets or sets the email of the user.
             </summary>
         </member>
         <member name="P:backend.Entities.User.PasswordHash">
             <summary>
-            
+            Gets or sets the password hash of the user.
             </summary>
         </member>
         <member name="P:backend.Entities.User.PasswordSalt">
             <summary>
-            
+            Gets or sets the password salt of the user.
             </summary>
         </member>
         <member name="P:backend.Entities.User.CreatedAt">
             <summary>
-            
+            Gets or sets the timestamp of when the user was created.
             </summary>
         </member>
         <member name="P:backend.Entities.User.UpdatedAt">
             <summary>
-            
+            Gets or sets the timestamp of when the user was last updated.
             </summary>
         </member>
         <member name="P:backend.Entities.User.Contacts">
             <summary>
-            
+            Gets or sets the collection of contacts associated with the user.
             </summary>
         </member>
         <member name="T:backend.Exceptions.ContactNotFoundException">
             <summary>
-            
+            Exception class to represent a contact not found error.
             </summary>
         </member>
         <member name="M:backend.Exceptions.ContactNotFoundException.#ctor(System.String)">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Exceptions.ContactNotFoundException"/> class with a custom error message.
             </summary>
-            <param name="message"></param>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="T:backend.Exceptions.TokenNotFoundException">
+            <summary>
+            Exception class to represent a token not found error.
+            </summary>
+        </member>
+        <member name="M:backend.Exceptions.TokenNotFoundException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:backend.Exceptions.TokenNotFoundException"/> class with a custom error message.
+            </summary>
+            <param name="message">The error message.</param>
+        </member>
+        <member name="T:backend.Exceptions.UserExistsException">
+            <summary>
+            Exception class to represent a user already exists error.
+            </summary>
+        </member>
+        <member name="M:backend.Exceptions.UserExistsException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:backend.Exceptions.UserExistsException"/> class with a custom error message.
+            </summary>
+            <param name="message">The error message.</param>
         </member>
         <member name="T:backend.Exceptions.UserNotFoundException">
             <summary>
-            
+            Exception class to represent a user not found error.
             </summary>
         </member>
         <member name="M:backend.Exceptions.UserNotFoundException.#ctor(System.String)">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Exceptions.UserNotFoundException"/> class with a custom error message.
             </summary>
-            <param name="message"></param>
-        </member>
-        <member name="T:backend.Exceptions.UserSignInFailedException">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:backend.Exceptions.UserSignInFailedException.#ctor(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="message"></param>
-        </member>
-        <member name="T:backend.Exceptions.UserSignUpFailedException">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:backend.Exceptions.UserSignUpFailedException.#ctor(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="message"></param>
+            <param name="message">The error message.</param>
         </member>
         <member name="T:backend.Mappers.AuthMapper">
             <summary>
-            
+            Mapper class to define mappings between User entities and authentication models.
             </summary>
         </member>
         <member name="M:backend.Mappers.AuthMapper.#ctor">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Mappers.AuthMapper"/> class.
             </summary>
         </member>
         <member name="T:backend.Mappers.ContactMapper">
             <summary>
-            
+            Mapper class to define mappings between Contact entities and models.
             </summary>
         </member>
         <member name="M:backend.Mappers.ContactMapper.#ctor">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Mappers.ContactMapper"/> class.
             </summary>
         </member>
         <member name="T:backend.Mappers.UserMapper">
             <summary>
-            
+            Mapper class to define mappings between User entities and user-related models.
             </summary>
         </member>
         <member name="M:backend.Mappers.UserMapper.#ctor">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Mappers.UserMapper"/> class.
             </summary>
         </member>
         <member name="T:backend.Migrations.InitialCreate">
@@ -419,620 +457,523 @@
         </member>
         <member name="T:backend.Models.AuthModels.SignInModel">
             <summary>
-            
+            Data model for user sign-in.
             </summary>
         </member>
         <member name="P:backend.Models.AuthModels.SignInModel.Email">
             <summary>
-            
+            Gets or sets the user's email.
             </summary>
         </member>
         <member name="P:backend.Models.AuthModels.SignInModel.Password">
             <summary>
-            
+            Gets or sets the user's password.
             </summary>
         </member>
         <member name="T:backend.Models.AuthModels.SignUpModel">
             <summary>
-            
+            Data model for user sign-up.
             </summary>
         </member>
         <member name="P:backend.Models.AuthModels.SignUpModel.FirstName">
             <summary>
-            
+            Gets or sets the user's first name.
             </summary>
         </member>
         <member name="P:backend.Models.AuthModels.SignUpModel.LastName">
             <summary>
-            
+            Gets or sets the user's last name.
             </summary>
         </member>
         <member name="P:backend.Models.AuthModels.SignUpModel.UserName">
             <summary>
-            
+            Gets or sets the user's username.
             </summary>
         </member>
         <member name="P:backend.Models.AuthModels.SignUpModel.Email">
             <summary>
-            
+            Gets or sets the user's email.
             </summary>
         </member>
         <member name="P:backend.Models.AuthModels.SignUpModel.Password">
             <summary>
-            
+            Gets or sets the user's password.
             </summary>
         </member>
         <member name="P:backend.Models.AuthModels.SignUpModel.ConfirmPassword">
             <summary>
-            
+            Gets or sets the user's confirmation password.
             </summary>
         </member>
         <member name="T:backend.Models.ContactModels.GetUserContactModel">
             <summary>
-            
+            Model for retrieving user contact information.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.GetUserContactModel.Id">
             <summary>
-            
+            Gets or sets the ID of the contact.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.GetUserContactModel.FirstName">
             <summary>
-            
+            Gets or sets the first name of the contact.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.GetUserContactModel.LastName">
             <summary>
-            
+            Gets or sets the last name of the contact.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.GetUserContactModel.Email">
             <summary>
-            
+            Gets or sets the email of the contact.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.GetUserContactModel.PhoneNo">
             <summary>
-            
+            Gets or sets the phone number of the contact.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.GetUserContactModel.Address">
             <summary>
-            
+            Gets or sets the address of the contact.
             </summary>
         </member>
         <member name="T:backend.Models.ContactModels.UpsertUserContactModel">
             <summary>
-            
+            Model for updating or inserting user contact information.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.UpsertUserContactModel.FirstName">
             <summary>
-            
+            Gets or sets the first name of the contact.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.UpsertUserContactModel.LastName">
             <summary>
-            
+            Gets or sets the last name of the contact.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.UpsertUserContactModel.Email">
             <summary>
-            
+            Gets or sets the email of the contact.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.UpsertUserContactModel.PhoneNo">
             <summary>
-            
+            Gets or sets the phone number of the contact.
             </summary>
         </member>
         <member name="P:backend.Models.ContactModels.UpsertUserContactModel.Address">
             <summary>
-            
+            Gets or sets the address of the contact.
             </summary>
         </member>
         <member name="T:backend.Models.UserModels.GetUserProfileModel">
             <summary>
-            
+            Model for retrieving user profile information.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.GetUserProfileModel.Id">
             <summary>
-            
+            Gets or sets the ID of the user.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.GetUserProfileModel.FirstName">
             <summary>
-            
+            Gets or sets the first name of the user.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.GetUserProfileModel.LastName">
             <summary>
-            
+            Gets or sets the last name of the user.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.GetUserProfileModel.UserName">
             <summary>
-            
+            Gets or sets the username of the user.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.GetUserProfileModel.Email">
             <summary>
-            
+            Gets or sets the email of the user.
             </summary>
         </member>
         <member name="T:backend.Models.UserModels.UpdateUserPasswordModel">
             <summary>
-            
+            Model for updating user's password.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.UpdateUserPasswordModel.OldPassword">
             <summary>
-            
+            Gets or sets the old password of the user.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.UpdateUserPasswordModel.NewPassword">
             <summary>
-            
+            Gets or sets the new password of the user.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.UpdateUserPasswordModel.ConfirmNewPassword">
             <summary>
-            
+            Gets or sets the confirmation of the new password of the user.
             </summary>
         </member>
         <member name="T:backend.Models.UserModels.UpdateUserProfileModel">
             <summary>
-            
+            Model for updating user profile information.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.UpdateUserProfileModel.FirstName">
             <summary>
-            
+            Gets or sets the updated first name of the user.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.UpdateUserProfileModel.LastName">
             <summary>
-            
+            Gets or sets the updated last name of the user.
             </summary>
         </member>
         <member name="P:backend.Models.UserModels.UpdateUserProfileModel.UserName">
             <summary>
-            
+            Gets or sets the updated username of the user.
             </summary>
         </member>
         <member name="T:backend.Repositories.AuthRepository.AuthRepository">
             <summary>
-            
+            Repository class for user authentication operations.
             </summary>
         </member>
         <member name="M:backend.Repositories.AuthRepository.AuthRepository.#ctor(backend.Data.DataContext)">
             <summary>
-            
+            Initializes a new instance of the `AuthRepository` class.
             </summary>
-            <param name="context"></param>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <param name="context">The database context.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if the context is null.</exception>
         </member>
         <member name="M:backend.Repositories.AuthRepository.AuthRepository.IsUserExists(backend.Entities.User)">
-            <summary>
-            
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Repositories.AuthRepository.AuthRepository.AddNewUser(backend.Entities.User)">
-            <summary>
-            
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Repositories.AuthRepository.AuthRepository.GetUserByEmail(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="email"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="T:backend.Repositories.AuthRepository.IAuthRepository">
             <summary>
-            
+            Interface for user authentication repository.
             </summary>
         </member>
         <member name="M:backend.Repositories.AuthRepository.IAuthRepository.IsUserExists(backend.Entities.User)">
             <summary>
-            
+            Check if a user with the given details exists.
             </summary>
-            <param name="user"></param>
-            <returns></returns>
+            <param name="user">The user to check.</param>
+            <returns>Returns true if the user exists, false otherwise.</returns>
         </member>
         <member name="M:backend.Repositories.AuthRepository.IAuthRepository.AddNewUser(backend.Entities.User)">
             <summary>
-            
+            Add a new user to the repository.
             </summary>
-            <param name="user"></param>
-            <returns></returns>
+            <param name="user">The user to add.</param>
+            <returns>Returns true if the user was added successfully.</returns>
         </member>
         <member name="M:backend.Repositories.AuthRepository.IAuthRepository.GetUserByEmail(System.String)">
             <summary>
-            
+            Get a user by their email.
             </summary>
-            <param name="email"></param>
-            <returns></returns>
+            <param name="email">The email of the user.</param>
+            <returns>Returns the user with the specified email, or null if not found.</returns>
         </member>
         <member name="T:backend.Repositories.ContactRepository.ContactRepository">
             <summary>
-            
+            Repository class for contact operations.
             </summary>
         </member>
         <member name="M:backend.Repositories.ContactRepository.ContactRepository.#ctor(backend.Data.DataContext)">
             <summary>
-            
+            Initializes a new instance of the `ContactRepository` class.
             </summary>
-            <param name="context"></param>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <param name="context">The database context.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if the context is null.</exception>
         </member>
         <member name="M:backend.Repositories.ContactRepository.ContactRepository.GetUserContacts(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="userId"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Repositories.ContactRepository.ContactRepository.GetUserContact(System.Int32,System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="userId"></param>
-            <param name="contactId"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Repositories.ContactRepository.ContactRepository.CreateUserContact(backend.Entities.Contact)">
-            <summary>
-            
-            </summary>
-            <param name="contact"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Repositories.ContactRepository.ContactRepository.UpdateUserContact(backend.Entities.Contact,backend.Entities.Contact)">
-            <summary>
-            
-            </summary>
-            <param name="contact"></param>
-            <param name="newContactDetails"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Repositories.ContactRepository.ContactRepository.DeleteUserContact(backend.Entities.Contact)">
-            <summary>
-            
-            </summary>
-            <param name="contact"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="T:backend.Repositories.ContactRepository.IContactRepository">
             <summary>
-            
+            Interface for user contact repository.
             </summary>
         </member>
         <member name="M:backend.Repositories.ContactRepository.IContactRepository.GetUserContacts(System.Int32)">
             <summary>
-            
+            Get contacts of a user.
             </summary>
-            <param name="userId"></param>
-            <returns></returns>
+            <param name="userId">The ID of the user.</param>
+            <returns>Returns a collection of user contacts.</returns>
         </member>
         <member name="M:backend.Repositories.ContactRepository.IContactRepository.GetUserContact(System.Int32,System.Int32)">
             <summary>
-            
+            Get a user contact by its ID.
             </summary>
-            <param name="userId"></param>
-            <param name="contactId"></param>
-            <returns></returns>
+            <param name="userId">The ID of the user.</param>
+            <param name="contactId">The ID of the contact.</param>
+            <returns>Returns the user contact with the specified ID, or null if not found.</returns>
         </member>
         <member name="M:backend.Repositories.ContactRepository.IContactRepository.CreateUserContact(backend.Entities.Contact)">
             <summary>
-            
+            Create a new user contact.
             </summary>
-            <param name="contact"></param>
-            <returns></returns>
+            <param name="contact">The contact to create.</param>
+            <returns>Returns true if the contact was created successfully.</returns>
         </member>
         <member name="M:backend.Repositories.ContactRepository.IContactRepository.UpdateUserContact(backend.Entities.Contact,backend.Entities.Contact)">
             <summary>
-            
+            Update a user contact with new details.
             </summary>
-            <param name="contact"></param>
-            <param name="newContactDetails"></param>
-            <returns></returns>
+            <param name="contact">The existing contact.</param>
+            <param name="newContactDetails">The new contact details.</param>
+            <returns>Returns true if the contact was updated successfully.</returns>
         </member>
         <member name="M:backend.Repositories.ContactRepository.IContactRepository.DeleteUserContact(backend.Entities.Contact)">
             <summary>
-            
+            Delete a user contact.
             </summary>
-            <param name="contact"></param>
-            <returns></returns>
+            <param name="contact">The contact to delete.</param>
+            <returns>Returns true if the contact was deleted successfully.</returns>
         </member>
         <member name="T:backend.Repositories.UserRepository.IUserRepository">
             <summary>
-            
+            Repository interface for user operations.
             </summary>
         </member>
         <member name="M:backend.Repositories.UserRepository.IUserRepository.GetUserByToken(System.Int32,System.String)">
             <summary>
-            
+            Gets a user by their token (userId and email).
             </summary>
-            <param name="userId"></param>
-            <param name="email"></param>
-            <returns></returns>
+            <param name="userId">The user's ID.</param>
+            <param name="email">The user's email.</param>
+            <returns>The user if found, or null.</returns>
         </member>
         <member name="M:backend.Repositories.UserRepository.IUserRepository.UpdateUserProfile(backend.Entities.User,backend.Entities.User)">
             <summary>
-            
+            Updates a user's profile details.
             </summary>
-            <param name="user"></param>
-            <param name="newUserDetails"></param>
-            <returns></returns>
+            <param name="user">The user to be updated.</param>
+            <param name="newUserDetails">The new user details.</param>
+            <returns>True if the update was successful, false otherwise.</returns>
         </member>
         <member name="T:backend.Repositories.UserRepository.UserRepository">
             <summary>
-            
+            Repository class for user operations.
             </summary>
         </member>
         <member name="M:backend.Repositories.UserRepository.UserRepository.#ctor(backend.Data.DataContext)">
             <summary>
-            
+            Initializes a new instance of the `UserRepository` class.
             </summary>
-            <param name="context"></param>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <param name="context">The database context.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if the context is null.</exception>
         </member>
         <member name="M:backend.Repositories.UserRepository.UserRepository.GetUserByToken(System.Int32,System.String)">
-            <summary>
-            
-            </summary>
-            <param name="userId"></param>
-            <param name="email"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Repositories.UserRepository.UserRepository.UpdateUserProfile(backend.Entities.User,backend.Entities.User)">
-            <summary>
-            
-            </summary>
-            <param name="user"></param>
-            <param name="newUserDetails"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="T:backend.Services.AuthService.AuthService">
             <summary>
-            
+            Service class for authentication operations.
             </summary>
         </member>
         <member name="M:backend.Services.AuthService.AuthService.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration,backend.Repositories.AuthRepository.IAuthRepository)">
             <summary>
-            
+            Initializes a new instance of the `AuthService` class.
             </summary>
-            <param name="mapper"></param>
-            <param name="configuration"></param>
-            <param name="authRepository"></param>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <param name="mapper">The AutoMapper instance.</param>
+            <param name="configuration">The configuration instance.</param>
+            <param name="authRepository">The authentication repository.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if any of the parameters are null.</exception>
         </member>
         <member name="M:backend.Services.AuthService.AuthService.SignUp(backend.Models.AuthModels.SignUpModel)">
-            <summary>
-            
-            </summary>
-            <param name="request"></param>
-            <returns></returns>
-            <exception cref="T:backend.Exceptions.UserSignUpFailedException"></exception>
+            <inheritdoc />
         </member>
         <member name="M:backend.Services.AuthService.AuthService.SignIn(backend.Models.AuthModels.SignInModel)">
-            <summary>
-            
-            </summary>
-            <param name="request"></param>
-            <returns></returns>
-            <exception cref="T:backend.Exceptions.UserNotFoundException"></exception>
-            <exception cref="T:backend.Exceptions.UserSignInFailedException"></exception>
+            <inheritdoc />
         </member>
-        <member name="M:backend.Services.AuthService.AuthService.HashPasword(backend.Entities.User,System.String)">
+        <member name="M:backend.Services.AuthService.AuthService.HashPassword(backend.Entities.User,System.String)">
             <summary>
-            
+            Hashes the user's password using bcrypt and updates the user object.
             </summary>
-            <param name="user"></param>
-            <param name="password"></param>
+            <param name="user">The user object.</param>
+            <param name="password">The user's password.</param>
         </member>
         <member name="T:backend.Services.AuthService.IAuthService">
             <summary>
-            
+            Interface for authentication operations.
             </summary>
         </member>
         <member name="M:backend.Services.AuthService.IAuthService.SignUp(backend.Models.AuthModels.SignUpModel)">
             <summary>
-            
+            Registers a new user and returns an access token.
             </summary>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="request">The user registration information.</param>
+            <returns>An access token if registration is successful.</returns>
         </member>
         <member name="M:backend.Services.AuthService.IAuthService.SignIn(backend.Models.AuthModels.SignInModel)">
             <summary>
-            
+            Authenticates a user and returns an access token.
             </summary>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="request">The user's sign-in information.</param>
+            <returns>An access token if authentication is successful.</returns>
         </member>
         <member name="T:backend.Services.ContactService.ContactService">
             <summary>
-            
+            Service for contact operations.
             </summary>
         </member>
         <member name="M:backend.Services.ContactService.ContactService.#ctor(AutoMapper.IMapper,backend.Repositories.ContactRepository.IContactRepository)">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Services.ContactService.ContactService"/> class.
             </summary>
-            <param name="mapper"></param>
-            <param name="contactRepository"></param>
+            <param name="mapper">The AutoMapper instance.</param>
+            <param name="contactRepository">The contact repository.</param>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="M:backend.Services.ContactService.ContactService.GetUserContacts(backend.Entities.User)">
-            <summary>
-            
-            </summary>
-            <param name="user"></param>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Services.ContactService.ContactService.GetUserContact(backend.Entities.User,System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="user"></param>
-            <param name="contactId"></param>
-            <returns></returns>
-            <exception cref="T:backend.Exceptions.ContactNotFoundException"></exception>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Services.ContactService.ContactService.CreateUserContact(backend.Entities.User,backend.Models.ContactModels.UpsertUserContactModel)">
-            <summary>
-            
-            </summary>
-            <param name="user"></param>
-            <param name="request"></param>
-            <returns></returns>
-            <exception cref="T:System.Exception"></exception>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Services.ContactService.ContactService.UpdateUserContact(backend.Entities.User,System.Int32,backend.Models.ContactModels.UpsertUserContactModel)">
-            <summary>
-            
-            </summary>
-            <param name="user"></param>
-            <param name="contactId"></param>
-            <param name="request"></param>
-            <returns></returns>
-            <exception cref="T:backend.Exceptions.ContactNotFoundException"></exception>
-            <exception cref="T:System.Exception"></exception>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Services.ContactService.ContactService.DeleteUserContact(backend.Entities.User,System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="user"></param>
-            <param name="contactId"></param>
-            <returns></returns>
-            <exception cref="T:backend.Exceptions.ContactNotFoundException"></exception>
-            <exception cref="T:System.Exception"></exception>
+            <inheritdoc/>
         </member>
         <member name="T:backend.Services.ContactService.IContactService">
             <summary>
-            
+            Service interface for contact-related operations.
             </summary>
         </member>
         <member name="M:backend.Services.ContactService.IContactService.GetUserContacts(backend.Entities.User)">
             <summary>
-            
+            Retrieves the list of contacts associated with the specified user.
             </summary>
-            <param name="user"></param>
-            <returns></returns>
+            <param name="user">The user for whom to retrieve contacts.</param>
+            <returns>A collection of <see cref="T:backend.Models.ContactModels.GetUserContactModel"/> representing user contacts.</returns>
         </member>
         <member name="M:backend.Services.ContactService.IContactService.GetUserContact(backend.Entities.User,System.Int32)">
             <summary>
-            
+            Retrieves a specific contact associated with the specified user.
             </summary>
-            <param name="user"></param>
-            <param name="contactId"></param>
-            <returns></returns>
+            <param name="user">The user for whom to retrieve the contact.</param>
+            <param name="contactId">The ID of the contact to retrieve.</param>
+            <returns>The <see cref="T:backend.Models.ContactModels.GetUserContactModel"/> representing the requested contact.</returns>
         </member>
         <member name="M:backend.Services.ContactService.IContactService.CreateUserContact(backend.Entities.User,backend.Models.ContactModels.UpsertUserContactModel)">
             <summary>
-            
+            Creates a new contact for the specified user.
             </summary>
-            <param name="user"></param>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="user">The user for whom to create the contact.</param>
+            <param name="request">The details of the new contact.</param>
+            <returns>The <see cref="T:backend.Models.ContactModels.GetUserContactModel"/> representing the newly created contact.</returns>
         </member>
         <member name="M:backend.Services.ContactService.IContactService.UpdateUserContact(backend.Entities.User,System.Int32,backend.Models.ContactModels.UpsertUserContactModel)">
             <summary>
-            
+            Updates an existing contact associated with the specified user.
             </summary>
-            <param name="user"></param>
-            <param name="contactId"></param>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="user">The user for whom to update the contact.</param>
+            <param name="contactId">The ID of the contact to update.</param>
+            <param name="request">The updated details of the contact.</param>
+            <returns>The <see cref="T:backend.Models.ContactModels.GetUserContactModel"/> representing the updated contact.</returns>
         </member>
         <member name="M:backend.Services.ContactService.IContactService.DeleteUserContact(backend.Entities.User,System.Int32)">
             <summary>
-            
+            Deletes a contact associated with the specified user.
             </summary>
-            <param name="user"></param>
-            <param name="contactId"></param>
-            <returns></returns>
+            <param name="user">The user for whom to delete the contact.</param>
+            <param name="contactId">The ID of the contact to delete.</param>
+            <returns><c>true</c> if the contact is successfully deleted; otherwise, <c>false</c>.</returns>
         </member>
         <member name="T:backend.Services.UserService.IUserService">
             <summary>
-            
+            Service interface for user-related operations.
             </summary>
         </member>
         <member name="M:backend.Services.UserService.IUserService.GetUserByToken">
             <summary>
-            
+            Retrieves the user associated with the provided authentication token.
             </summary>
-            <returns></returns>
+            <returns>The <see cref="T:backend.Entities.User"/> associated with the token.</returns>
         </member>
         <member name="M:backend.Services.UserService.IUserService.GetUserProfile">
             <summary>
-            
+            Retrieves the profile of the authenticated user.
             </summary>
-            <returns></returns>
+            <returns>The <see cref="T:backend.Models.UserModels.GetUserProfileModel"/> representing the user profile.</returns>
         </member>
         <member name="M:backend.Services.UserService.IUserService.UpdateUserProfile(backend.Models.UserModels.UpdateUserProfileModel)">
             <summary>
-            
+            Updates the profile details of the authenticated user.
             </summary>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="request">The updated user profile details.</param>
+            <returns>The <see cref="T:backend.Models.UserModels.GetUserProfileModel"/> representing the updated user profile.</returns>
+            <exception cref="T:System.Exception">Thrown when failed to update the user profile.</exception>
         </member>
         <member name="T:backend.Services.UserService.UserService">
             <summary>
-            
+            Service class for user-related operations.
             </summary>
         </member>
         <member name="M:backend.Services.UserService.UserService.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Http.IHttpContextAccessor,backend.Repositories.UserRepository.IUserRepository)">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Services.UserService.UserService"/> class.
             </summary>
-            <param name="mapper"></param>
-            <param name="httpContext"></param>
-            <param name="userRepository"></param>
-            <exception cref="T:System.ArgumentNullException"></exception>
+            <param name="mapper">The AutoMapper instance for object mapping.</param>
+            <param name="httpContext">The HttpContextAccessor to access the current HTTP context.</param>
+            <param name="userRepository">The repository for user data access.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when any of the parameters is null.</exception>
         </member>
         <member name="M:backend.Services.UserService.UserService.GetUserByToken">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-            <exception cref="T:backend.Exceptions.UserNotFoundException"></exception>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Services.UserService.UserService.GetUserProfile">
-            <summary>
-            
-            </summary>
-            <returns></returns>
+            <inheritdoc/>
         </member>
         <member name="M:backend.Services.UserService.UserService.UpdateUserProfile(backend.Models.UserModels.UpdateUserProfileModel)">
-            <summary>
-            
-            </summary>
-            <param name="request"></param>
-            <returns></returns>
-            <exception cref="T:System.Exception"></exception>
+            <inheritdoc/>
         </member>
         <member name="T:backend.Utils.TokenGenerator">
             <summary>
-            
+            Utility class for generating JWT tokens.
             </summary>
         </member>
         <member name="M:backend.Utils.TokenGenerator.AccessToken(backend.Entities.User,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            
+            Generates an access token for the given user using JWT.
             </summary>
-            <param name="user"></param>
-            <param name="configuration"></param>
-            <returns></returns>
+            <param name="user">The user for whom the token is being generated.</param>
+            <param name="configuration">The configuration containing JWT secret key.</param>
+            <returns>The generated JWT token as a string.</returns>
         </member>
     </members>
 </doc>
