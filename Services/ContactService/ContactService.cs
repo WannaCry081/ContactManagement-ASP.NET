@@ -7,7 +7,7 @@ using backend.Repositories.ContactRepository;
 namespace backend.Services.ContactService
 {
     /// <summary>
-    /// 
+    /// Service for contact operations.
     /// </summary>
     public class ContactService : IContactService
     {
@@ -15,10 +15,10 @@ namespace backend.Services.ContactService
         private readonly IContactRepository _contactRepository;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="ContactService"/> class.
         /// </summary>
-        /// <param name="mapper"></param>
-        /// <param name="contactRepository"></param>
+        /// <param name="mapper">The AutoMapper instance.</param>
+        /// <param name="contactRepository">The contact repository.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public ContactService(IMapper mapper, IContactRepository contactRepository)
         {
@@ -26,24 +26,14 @@ namespace backend.Services.ContactService
             _contactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<ICollection<GetUserContactModel>> GetUserContacts(User user)
         {
             var response = await _contactRepository.GetUserContacts(user.Id);
             return _mapper.Map<ICollection<GetUserContactModel>>(response);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="contactId"></param>
-        /// <returns></returns>
-        /// <exception cref="ContactNotFoundException"></exception>
+        /// <inheritdoc/>
         public async Task<GetUserContactModel> GetUserContact(User user, int contactId)
         {
             var response = await _contactRepository.GetUserContact(user.Id, contactId);
@@ -54,13 +44,7 @@ namespace backend.Services.ContactService
             return _mapper.Map<GetUserContactModel>(response);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <inheritdoc/>
         public async Task<GetUserContactModel> CreateUserContact(User user, UpsertUserContactModel request)
         {
             var newContact = _mapper.Map<Contact>(request);
@@ -74,15 +58,7 @@ namespace backend.Services.ContactService
             return _mapper.Map<GetUserContactModel>(newContact);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="contactId"></param>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        /// <exception cref="ContactNotFoundException"></exception>
-        /// <exception cref="Exception"></exception>
+        /// <inheritdoc/>
         public async Task<GetUserContactModel> UpdateUserContact(User user, int contactId, UpsertUserContactModel request)
         {
             var contact = await _contactRepository.GetUserContact(user.Id, contactId);
@@ -103,14 +79,7 @@ namespace backend.Services.ContactService
             return response;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user"></param>
-        /// <param name="contactId"></param>
-        /// <returns></returns>
-        /// <exception cref="ContactNotFoundException"></exception>
-        /// <exception cref="Exception"></exception>
+        /// <inheritdoc/>
         public async Task<bool> DeleteUserContact(User user, int contactId)
         {
             var contact = await _contactRepository.GetUserContact(user.Id, contactId);
