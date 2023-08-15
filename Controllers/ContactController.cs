@@ -44,14 +44,12 @@ namespace backend.Controllers
         /// 
         /// </remarks>
         /// <response code="200">Successfully returns list of user's contacts.</response>
-        /// <response code="401">Unauthorized request.</response>
         /// <response code="403">Invalid jwt token.</response>
         /// <response code="404">User not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ICollection<GetUserContactModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -73,7 +71,7 @@ namespace backend.Controllers
             catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -94,14 +92,12 @@ namespace backend.Controllers
         ///     
         /// </remarks>
         /// <response code="200">Returns the user's contact information.</response>
-        /// <response code="401">Unauthorized request.</response>
         /// <response code="403">Invalid jwt token.</response>
-        /// <response code="404">Contact with the specified ID not found.</response>
+        /// <response code="404">User and Contact with the specified ID not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpGet("{contactId}")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetUserContactModel), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -123,7 +119,7 @@ namespace backend.Controllers
             catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (ContactNotFoundException ex)
             {
@@ -156,15 +152,15 @@ namespace backend.Controllers
         ///     
         /// </remarks>
         /// <response code="200">Returns the new user's contact.</response>
-        /// <response code="401">Unauthorized request.</response>
         /// <response code="403">Invalid jwt token.</response>
+        /// <response code="404">User not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpPost]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetUserContactModel), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateUserContact([FromBody] UpsertUserContactModel request)
         {
@@ -184,7 +180,7 @@ namespace backend.Controllers
             catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -212,14 +208,17 @@ namespace backend.Controllers
         ///     }
         ///     
         /// </remarks>
-        /// <response code="200"></response>
-        /// <response code="401">Unauthorized request.</response>
+        /// <response code="200">Returns the new user's contact information.</response>
         /// <response code="403">Invalid jwt token.</response>
         /// <response code="404">Contact with the specified ID not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpPut("{contactId}")]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(typeof(GetUserContactModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateUserContact([FromRoute] int contactId, [FromBody] UpsertUserContactModel request)
         {
             try
@@ -238,7 +237,7 @@ namespace backend.Controllers
             catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (ContactNotFoundException ex)
             {
@@ -264,12 +263,15 @@ namespace backend.Controllers
         ///     
         /// </remarks>
         /// <response code="200">User's contact successfully deleted.</response>
-        /// <response code="401">Unauthorized request.</response>
         /// <response code="403">Invalid jwt token.</response>
         /// <response code="404">Contact with the specified ID not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpDelete("{contactId}")]
         [Produces("application/json")]
+        [ProducesResponseType(typeof(GetUserContactModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteUserContact([FromRoute] int contactId)
         {
             try
@@ -278,7 +280,7 @@ namespace backend.Controllers
                 var user = await _userService.GetUserByToken();
 
                 var response = await _contactService.DeleteUserContact(user, contactId);
-                return Ok("Successfully deleted user's contact.");
+                return Ok("Successfully delete user's contact.");
             }
             catch (TokenNotFoundException ex)
             {
@@ -288,7 +290,7 @@ namespace backend.Controllers
             catch (UserNotFoundException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
-                return Unauthorized(ex.Message);
+                return NotFound(ex.Message);
             }
             catch (ContactNotFoundException ex)
             {
