@@ -7,16 +7,16 @@ using backend.Entities;
 namespace backend.Utils
 {
     /// <summary>
-    /// 
+    /// Utility class for generating JWT tokens.
     /// </summary>
     public class TokenGenerator
     {
         /// <summary>
-        /// 
+        /// Generates an access token for the given user using JWT.
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
+        /// <param name="user">The user for whom the token is being generated.</param>
+        /// <param name="configuration">The configuration containing JWT secret key.</param>
+        /// <returns>The generated JWT token as a string.</returns>
         public static string AccessToken(User user, IConfiguration configuration)
         {
             List<Claim> claims = new()
