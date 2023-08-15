@@ -45,15 +45,15 @@ namespace backend.Controllers
         /// </remarks>
         /// <response code="200">Successfully returns list of user's contacts.</response>
         /// <response code="401">Unauthorized request.</response>
-        /// <response code="403">Token not found.</response>
+        /// <response code="403">Invalid jwt token.</response>
         /// <response code="404">User not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpGet]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ICollection<GetUserContactModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUserContacts()
         {
@@ -61,7 +61,7 @@ namespace backend.Controllers
             {
                 // To decrypt jwt token and returns the user
                 var user = await _userService.GetUserByToken();
-                
+
                 var response = await _contactService.GetUserContacts(user);
                 return Ok(response);
             }
@@ -95,7 +95,7 @@ namespace backend.Controllers
         /// </remarks>
         /// <response code="200">Returns the user's contact information.</response>
         /// <response code="401">Unauthorized request.</response>
-        /// <response code="403">Token not found.</response>
+        /// <response code="403">Invalid jwt token.</response>
         /// <response code="404">Contact with the specified ID not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpGet("{contactId}")]
@@ -157,7 +157,7 @@ namespace backend.Controllers
         /// </remarks>
         /// <response code="200">Returns the new user's contact.</response>
         /// <response code="401">Unauthorized request.</response>
-        /// <response code="403">Token not found.</response>
+        /// <response code="403">Invalid jwt token.</response>
         /// <response code="500">Internal server error.</response>
         [HttpPost]
         [Consumes("application/json")]
@@ -214,7 +214,7 @@ namespace backend.Controllers
         /// </remarks>
         /// <response code="200"></response>
         /// <response code="401">Unauthorized request.</response>
-        /// <response code="403">Token not found.</response>
+        /// <response code="403">Invalid jwt token.</response>
         /// <response code="404">Contact with the specified ID not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpPut("{contactId}")]
@@ -265,7 +265,7 @@ namespace backend.Controllers
         /// </remarks>
         /// <response code="200">User's contact successfully deleted.</response>
         /// <response code="401">Unauthorized request.</response>
-        /// <response code="403">Token not found.</response>
+        /// <response code="403">Invalid jwt token.</response>
         /// <response code="404">Contact with the specified ID not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpDelete("{contactId}")]
