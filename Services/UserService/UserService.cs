@@ -8,7 +8,7 @@ using backend.Models.UserModels;
 namespace backend.Services.UserService
 {
     /// <summary>
-    /// 
+    /// Service class for user-related operations.
     /// </summary>
     public class UserService : IUserService
     {
@@ -17,31 +17,27 @@ namespace backend.Services.UserService
         private readonly IUserRepository _userRepository;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="UserService"/> class.
         /// </summary>
-        /// <param name="mapper"></param>
-        /// <param name="httpContext"></param>
-        /// <param name="userRepository"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="mapper">The AutoMapper instance for object mapping.</param>
+        /// <param name="httpContext">The HttpContextAccessor to access the current HTTP context.</param>
+        /// <param name="userRepository">The repository for user data access.</param>
+        /// <exception cref="ArgumentNullException">Thrown when any of the parameters is null.</exception>
         public UserService(IMapper mapper, IHttpContextAccessor httpContext, IUserRepository userRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _httpContext = httpContext ?? throw new ArgumentNullException(nameof(httpContext));
-            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(httpContext));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="UserNotFoundException"></exception>
+        /// <inheritdoc/>
         public async Task<User> GetUserByToken()
         {
             var httpContext = _httpContext.HttpContext;
 
             if (httpContext is null)
             {
-                throw new UserNotFoundException("Token not found.");
+                throw new TokenNotFoundException("Token not found.");
             }
 
             var user = await _userRepository.GetUserByToken(
@@ -51,28 +47,20 @@ namespace backend.Services.UserService
 
             if (user is null)
             {
-                throw new UserNotFoundException("User not found");
+                throw new UserNotFoundException("User not found.");
             }
 
             return user;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<GetUserProfileModel> GetUserProfile()
         {
             var response = await GetUserByToken();
             return _mapper.Map<GetUserProfileModel>(response);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
+        /// <inheritdoc/>
         public async Task<GetUserProfileModel> UpdateUserProfile(UpdateUserProfileModel request)
         {
             var user = await GetUserByToken();
