@@ -210,7 +210,7 @@ namespace backend.Controllers
         /// </remarks>
         /// <response code="200">Returns the new user's contact information.</response>
         /// <response code="403">Invalid jwt token.</response>
-        /// <response code="404">Contact with the specified ID not found.</response>
+        /// <response code="404">User and Contact with the specified ID not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpPut("{contactId}")]
         [Consumes("application/json")]
@@ -264,7 +264,7 @@ namespace backend.Controllers
         /// </remarks>
         /// <response code="200">User's contact successfully deleted.</response>
         /// <response code="403">Invalid jwt token.</response>
-        /// <response code="404">Contact with the specified ID not found.</response>
+        /// <response code="404">User and Contact with the specified ID not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpDelete("{contactId}")]
         [Produces("application/json")]
