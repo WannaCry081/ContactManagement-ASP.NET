@@ -62,7 +62,7 @@ namespace backend.Controllers
                 var response = await _authService.SignUp(request);
                 return Ok(response);
             }
-            catch (UserSignUpFailedException ex)
+            catch (UserExistsException ex)
             {
                 _logger.LogError(ex, "An error occurred while attempting to add user to database.");
                 return Conflict(ex.Message);
@@ -112,9 +112,9 @@ namespace backend.Controllers
                 _logger.LogError(ex, "An error occurred while attempting to get user.");
                 return NotFound(ex.Message);
             }
-            catch (UserSignInFailedException ex)
+            catch (UnauthorizedAccessException ex)
             {
-                _logger.LogError(ex, "An error occurred while attempting to match Password.");
+                _logger.LogError(ex, "An error occurred while attempting to match password.");
                 return Unauthorized(ex.Message);
             }
             catch (Exception ex)
