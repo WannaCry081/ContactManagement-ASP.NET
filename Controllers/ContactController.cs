@@ -38,27 +38,37 @@ namespace backend.Controllers
         /// </summary>
         /// <returns>A list of user's contacts.</returns>
         /// <remarks>
+        /// Sample Request:
         ///     
         ///     GET /api/contact
         /// 
         /// </remarks>
         /// <response code="200">Successfully returns list of user's contacts.</response>
         /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Token not found.</response>
         /// <response code="404">User not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(GetUserContactModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ICollection<GetUserContactModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUserContacts()
         {
             try
             {
+                // To decrypt jwt token and returns the user
                 var user = await _userService.GetUserByToken();
+                
                 var response = await _contactService.GetUserContacts(user);
                 return Ok(response);
+            }
+            catch (TokenNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get access token.");
+                return Forbid(ex.Message);
             }
             catch (UserNotFoundException ex)
             {
@@ -71,30 +81,44 @@ namespace backend.Controllers
                 return Problem(ex.Message);
             }
         }
-        
+
         /// <summary>
         /// Get user's specific contact information.
         /// </summary>
         /// <param name="contactId">The ID of the specific contact.</param>
         /// <returns>A response containing user's contact information.</returns>
         /// <remarks>
+        /// Sample Request:
         /// 
         ///     GET /api/contact/1
         ///     
         /// </remarks>
         /// <response code="200">Returns the user's contact information.</response>
         /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Token not found.</response>
         /// <response code="404">Contact with the specified ID not found.</response>
         /// <response code="500">Internal server error.</response>
         [HttpGet("{contactId}")]
         [Produces("application/json")]
+        [ProducesResponseType(typeof(GetUserContactModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUserContact([FromRoute] int contactId)
         {
             try
             {
+                // To decrypt jwt token and returns the user
                 var user = await _userService.GetUserByToken();
+
                 var response = await _contactService.GetUserContact(user, contactId);
                 return Ok(response);
+            }
+            catch (TokenNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get access token.");
+                return Forbid(ex.Message);
             }
             catch (UserNotFoundException ex)
             {
@@ -114,11 +138,12 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Create new user's contact information.
         /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        /// <param name="request">The contact details to be created.</param>
+        /// <returns>The newly created user's contact.</returns>
         /// <remarks>
+        /// Sample Request:
         ///     
         ///     POST /api/contact 
         ///     {
@@ -130,16 +155,31 @@ namespace backend.Controllers
         ///     }
         ///     
         /// </remarks>
+        /// <response code="200">Returns the new user's contact.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Token not found.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpPost]
         [Consumes("application/json")]
         [Produces("application/json")]
+        [ProducesResponseType(typeof(GetUserContactModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateUserContact([FromBody] UpsertUserContactModel request)
         {
             try
             {
+                // To decrypt jwt token and returns the user
                 var user = await _userService.GetUserByToken();
+
                 var response = await _contactService.CreateUserContact(user, request);
                 return Ok(response);
+            }
+            catch (TokenNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get access token.");
+                return Forbid(ex.Message);
             }
             catch (UserNotFoundException ex)
             {
@@ -154,12 +194,13 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates user's contact information.
         /// </summary>
-        /// <param name="contactId"></param>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        /// <param name="contactId">The ID of the specific contact.</param>
+        /// <param name="request">The contact details to be updated.</param>
+        /// <returns>The updated user's contact.</returns>
         /// <remarks>
+        /// Sample Request:
         /// 
         ///     PUT /api/contact/1
         ///     {
@@ -171,6 +212,11 @@ namespace backend.Controllers
         ///     }
         ///     
         /// </remarks>
+        /// <response code="200"></response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Token not found.</response>
+        /// <response code="404">Contact with the specified ID not found.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpPut("{contactId}")]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -178,9 +224,16 @@ namespace backend.Controllers
         {
             try
             {
+                // To decrypt jwt token and returns the user
                 var user = await _userService.GetUserByToken();
+
                 var response = await _contactService.UpdateUserContact(user, contactId, request);
                 return Ok(response);
+            }
+            catch (TokenNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get access token.");
+                return Forbid(ex.Message);
             }
             catch (UserNotFoundException ex)
             {
@@ -198,26 +251,39 @@ namespace backend.Controllers
                 return Problem(ex.Message);
             }
         }
-        
+
         /// <summary>
-        /// 
+        /// Deletes user's contact information.
         /// </summary>
-        /// <param name="contactId"></param>
-        /// <returns></returns>
+        /// <param name="contactId">The ID of the specific contact.</param>
+        /// <returns>Returns a success message.</returns>
         /// <remarks>
+        /// Sample Request:
         ///     
         ///     DELETE /api/contact/1
         ///     
         /// </remarks>
+        /// <response code="200">User's contact successfully deleted.</response>
+        /// <response code="401">Unauthorized request.</response>
+        /// <response code="403">Token not found.</response>
+        /// <response code="404">Contact with the specified ID not found.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpDelete("{contactId}")]
         [Produces("application/json")]
         public async Task<IActionResult> DeleteUserContact([FromRoute] int contactId)
         {
             try
             {
+                // To decrypt jwt token and returns the user
                 var user = await _userService.GetUserByToken();
+
                 var response = await _contactService.DeleteUserContact(user, contactId);
                 return Ok("Successfully deleted user's contact.");
+            }
+            catch (TokenNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get access token.");
+                return Forbid(ex.Message);
             }
             catch (UserNotFoundException ex)
             {
