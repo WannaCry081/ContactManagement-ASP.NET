@@ -8,7 +8,7 @@ using backend.Utils;
 namespace backend.Services.AuthService
 {
     /// <summary>
-    /// 
+    /// Service class for authentication operations.
     /// </summary>
     public class AuthService : IAuthService
     {
@@ -17,12 +17,12 @@ namespace backend.Services.AuthService
         private readonly IAuthRepository _authRepository;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the `AuthService` class.
         /// </summary>
-        /// <param name="mapper"></param>
-        /// <param name="configuration"></param>
-        /// <param name="authRepository"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <param name="mapper">The AutoMapper instance.</param>
+        /// <param name="configuration">The configuration instance.</param>
+        /// <param name="authRepository">The authentication repository.</param>
+        /// <exception cref="ArgumentNullException">Thrown if any of the parameters are null.</exception>
         public AuthService(IMapper mapper, IConfiguration configuration, IAuthRepository authRepository)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -30,61 +30,50 @@ namespace backend.Services.AuthService
             _authRepository = authRepository ?? throw new ArgumentNullException(nameof(authRepository));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        /// <exception cref="UserSignUpFailedException"></exception>
+        /// <inheritdoc />
         public async Task<string> SignUp(SignUpModel request)
         {
             var newUser = _mapper.Map<User>(request);
             var isUserExists = await _authRepository.IsUserExists(newUser);
             if (isUserExists)
             {
-                throw new UserSignUpFailedException("User already exists.");
+                throw new UserExistsException("User already exists.");
             }
 
-            HashPasword(newUser, request.Password);
+            HashPassword(newUser, request.Password);
 
             var isUserAdded = await _authRepository.AddNewUser(newUser);
             if (!isUserAdded)
             {
-                throw new UserSignUpFailedException("Failed to signup user.");
+                throw new Exception("Failed to signup user.");
             }
 
             return TokenGenerator.AccessToken(newUser, _configuration);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        /// <exception cref="UserNotFoundException"></exception>
-        /// <exception cref="UserSignInFailedException"></exception>
+        /// <inheritdoc />
         public async Task<string> SignIn(SignInModel request)
         {
             var user = await _authRepository.GetUserByEmail(request.Email);
             if (user is null)
             {
-                throw new UserNotFoundException("user not found.");
+                throw new UserNotFoundException("User not found.");
             }
 
             if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             {
-                throw new UserSignInFailedException("Password does not match.");
+                throw new UnauthorizedAccessException("Password does not match.");
             }
 
             return TokenGenerator.AccessToken(user, _configuration);
         }
 
         /// <summary>
-        /// 
+        /// Hashes the user's password using bcrypt and updates the user object.
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="password"></param>
-        private void HashPasword(User user, string password)
+        /// <param name="user">The user object.</param>
+        /// <param name="password">The user's password.</param>
+        private void HashPassword(User user, string password)
         {
             string passwordSalt = BCrypt.Net.BCrypt.GenerateSalt();
             user.PasswordSalt = passwordSalt;
