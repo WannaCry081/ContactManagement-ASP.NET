@@ -27,6 +27,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin() 
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+});
+
 // Redirect HTTP requests to HTTPS
 app.UseHttpsRedirection();
 
@@ -42,10 +49,10 @@ app.Run();
 // Configure services for dependency injection
 void ConfigureServices(IServiceCollection services)
 {
-    builder.Services.AddControllers();
+    services.AddControllers();
 
     // Configure database context using SQL Server
-    builder.Services.AddDbContext<DataContext>(options =>
+    services.AddDbContext<DataContext>(options =>
     {
         options.UseSqlServer(
             builder.Configuration.GetConnectionString("DefaultConnection")
@@ -53,26 +60,29 @@ void ConfigureServices(IServiceCollection services)
     });
 
     // Configure AutoMapper
-    builder.Services.AddAutoMapper(typeof(Program).Assembly);
+    services.AddAutoMapper(typeof(Program).Assembly);
+
+    // Configure Cross-origin resource sharing
+    services.AddCors();
 
     // Add HttpContextAccessor for accessing HttpContext in services
-    builder.Services.AddHttpContextAccessor();
+    services.AddHttpContextAccessor();
 
     // Register authentication and authorization services
-    builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-    builder.Services.AddScoped<IAuthService, AuthService>();
+    services.AddScoped<IAuthRepository, AuthRepository>();
+    services.AddScoped<IAuthService, AuthService>();
 
     // Register contact repository and service
-    builder.Services.AddScoped<IContactRepository, ContactRepository>();
-    builder.Services.AddScoped<IContactService, ContactService>();
+    services.AddScoped<IContactRepository, ContactRepository>();
+    services.AddScoped<IContactService, ContactService>();
 
     // Register user repository and service
-    builder.Services.AddScoped<IUserRepository, UserRepository>();
-    builder.Services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IUserRepository, UserRepository>();
+    services.AddScoped<IUserService, UserService>();
 
     // Configure Swagger API documentation
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen(options =>
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen(options =>
     {
         // Configure OAuth2 security definition for Swagger
         options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
@@ -104,7 +114,7 @@ void ConfigureServices(IServiceCollection services)
     });
 
     // Configure JWT Bearer authentication
-    builder.Services.AddAuthentication().AddJwtBearer(options =>
+    services.AddAuthentication().AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters()
         {
