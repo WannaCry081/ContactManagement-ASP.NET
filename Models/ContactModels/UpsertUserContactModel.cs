@@ -41,9 +41,15 @@ namespace backend.Models.ContactModels
         public string PhoneNo { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the address of the contact.
+        /// Gets or sets the delivery address of the contact.
         /// </summary>
-        [Required(ErrorMessage = "Address field is required.")]
-        public string Address { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Delivery Address field is required.")]
+        public string DeliveryAddress { get; set; } = string.Empty;
+        
+        /// <summary>
+        /// Gets or sets the billing address of the contact
+        /// </summary>
+        [Required(ErrorMessage = "Billing Address field is required.")]
+        public string BillingAddress { get; set; } = string.Empty;
     }
 }
