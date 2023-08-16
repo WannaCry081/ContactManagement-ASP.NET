@@ -53,7 +53,8 @@ namespace backend.Repositories.ContactRepository
             contact.LastName = newContactDetails.LastName;
             contact.Email = newContactDetails.Email;
             contact.PhoneNo = newContactDetails.PhoneNo;
-            contact.Address = newContactDetails.Address;
+            contact.BillingAddress = newContactDetails.BillingAddress;
+            contact.DeliveryAddress = newContactDetails.DeliveryAddress;
             contact.UpdatedAt = DateTime.Now;
 
             var result = await _context.SaveChangesAsync();
