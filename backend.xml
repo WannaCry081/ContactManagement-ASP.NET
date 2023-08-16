@@ -124,7 +124,8 @@
                     "lastName" : "Doe", 
                     "email" : "johndoe@example.com",
                     "phoneNo" : "09123456789",
-                    "address" : "USA"
+                    "deliveryAddress" : "Canada",
+                    "billingAddress" : "America"
                 }
                 
             </remarks>
@@ -149,7 +150,8 @@
                     "lastName" : "Doe", 
                     "email" : "johndoe@example.com",
                     "phoneNo" : "09123456789",
-                    "address" : "USA"
+                    "deliveryAddress" : "Canada",
+                    "billingAddress" : "America"
                 }
                 
             </remarks>
@@ -287,9 +289,14 @@
             Gets or sets the phone number of the contact.
             </summary>
         </member>
-        <member name="P:backend.Entities.Contact.Address">
+        <member name="P:backend.Entities.Contact.DeliveryAddress">
             <summary>
-            Gets or sets the address of the contact.
+            Gets or sets the delivery address of the contact.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.Contact.BillingAddress">
+            <summary>
+            Gets or sets the billing address of the contact
             </summary>
         </member>
         <member name="P:backend.Entities.Contact.CreatedAt">
@@ -535,9 +542,14 @@
             Gets or sets the phone number of the contact.
             </summary>
         </member>
-        <member name="P:backend.Models.ContactModels.GetUserContactModel.Address">
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.DeliveryAddress">
             <summary>
-            Gets or sets the address of the contact.
+            Gets or sets the delivery address of the contact.
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.BillingAddress">
+            <summary>
+            Gets or sets the billing address of the contact
             </summary>
         </member>
         <member name="T:backend.Models.ContactModels.UpsertUserContactModel">
@@ -565,9 +577,14 @@
             Gets or sets the phone number of the contact.
             </summary>
         </member>
-        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.Address">
+        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.DeliveryAddress">
             <summary>
-            Gets or sets the address of the contact.
+            Gets or sets the delivery address of the contact.
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.BillingAddress">
+            <summary>
+            Gets or sets the billing address of the contact
             </summary>
         </member>
         <member name="T:backend.Models.UserModels.GetUserProfileModel">

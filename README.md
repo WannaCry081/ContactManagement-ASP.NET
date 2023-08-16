@@ -62,3 +62,51 @@
     dotnet add package Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer
 
 -->
+
+<!-- 
+
+    Backend
+    - Add audit log
+
+    UserLog
+=============================
+- id : int : pk
+- userId : int
+- email : string
+- eventDetails : string
+	- Message 
+		User '{FirstName} {LastName}' with the Username '{UserName}' signed in successfully	
+		User '{FirstName} {LastName}' with the Username '{UserName}' registered successfully
+- eventType : CRUD
+	- Sign in
+	- Sign up
+- eventTime : Datetime
+
+
+ContactLog
+=============================
+- id : int : pk
+- contactId : int
+- userId : int
+- eventDetails : string
+	- Message
+		User 'Lirae Data' successfully created a contact.
+		User 'Lirae Data' updated the contact details.
+		User 'Lirae Data' deleted a contact.
+		User 'Lirae Data' viewed the contact details.
+				
+- data : Contact
+- eventTime : Date
+- eventType : CRUD 
+	- Created
+	- Retrieved
+	- Updated
+	- Deleted
+
+    - Change to nullables
+
+    Frontend
+    - Connect frontend and backend
+    - authorized pages
+    - Design frontend
+-->
