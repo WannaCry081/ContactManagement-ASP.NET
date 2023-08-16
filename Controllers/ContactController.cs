@@ -147,7 +147,8 @@ namespace backend.Controllers
         ///         "lastName" : "Doe", 
         ///         "email" : "johndoe@example.com",
         ///         "phoneNo" : "09123456789",
-        ///         "address" : "USA"
+        ///         "deliveryAddress" : "Canada",
+        ///         "billingAddress" : "America"
         ///     }
         ///     
         /// </remarks>
@@ -204,7 +205,8 @@ namespace backend.Controllers
         ///         "lastName" : "Doe", 
         ///         "email" : "johndoe@example.com",
         ///         "phoneNo" : "09123456789",
-        ///         "address" : "USA"
+        ///         "deliveryAddress" : "Canada",
+        ///         "billingAddress" : "America"
         ///     }
         ///     
         /// </remarks>
