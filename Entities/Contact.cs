@@ -51,9 +51,14 @@ namespace backend.Entities
         public string PhoneNo { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the address of the contact.
+        /// Gets or sets the delivery address of the contact.
         /// </summary>
-        public string Address { get; set; } = string.Empty;
+        public string DeliveryAddress { get; set; } = string.Empty;
+        
+        /// <summary>
+        /// Gets or sets the billing address of the contact
+        /// </summary>
+        public string BillingAddress { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the timestamp of when the contact was created.
