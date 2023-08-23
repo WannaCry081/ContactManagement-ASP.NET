@@ -13,8 +13,7 @@ namespace backend.Models.UserModels
         /// </summary>
         [PasswordPropertyText]
         [Required(ErrorMessage = "Old Password field is required.")]
-        [MinLength(6, ErrorMessage = "Minimum length for the Old Password field is 6 characters.")]
-        [MaxLength(150, ErrorMessage = "Maximum length for the Old Password field is 150 characters.")]
+        [StringLength(150, ErrorMessage = "Old Password must be between {2} and {1} characters long.", MinimumLength = 6)]
         public string OldPassword { get; set; } = string.Empty;
 
         /// <summary>
@@ -22,9 +21,7 @@ namespace backend.Models.UserModels
         /// </summary>
         [PasswordPropertyText]
         [Compare("ConfirmNewPassword", ErrorMessage = "Password does not match with Confirm New Password.")]
-        [Required(ErrorMessage = "New Password field is required.")]
-        [MinLength(6, ErrorMessage = "Minimum length for the New Password field is 6 characters.")]
-        [MaxLength(150, ErrorMessage = "Maximum length for the New Password field is 150 characters.")]
+        [StringLength(150, ErrorMessage = "New Password must be between {2} and {1} characters long.", MinimumLength = 6)]
         public string NewPassword { get; set; } = string.Empty;
 
         /// <summary>
@@ -33,8 +30,7 @@ namespace backend.Models.UserModels
         [PasswordPropertyText]
         [Compare("NewPassword", ErrorMessage = "Confirm New Password does not match with New Password.")]
         [Required(ErrorMessage = "Confirm New Password field is required.")]
-        [MinLength(6, ErrorMessage = "Minimum length for the Confirm New Password field is 6 characters.")]
-        [MaxLength(150, ErrorMessage = "Maximum length for the Confirm New Password field is 150 characters.")]
+        [StringLength(150, ErrorMessage = "Confirm New Password must be between {2} and {1} characters long.", MinimumLength = 6)]
         public string ConfirmNewPassword { get; set; } = string.Empty;
     }
 }
