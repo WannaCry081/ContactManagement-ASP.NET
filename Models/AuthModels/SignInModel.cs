@@ -11,10 +11,10 @@ namespace backend.Models.AuthModels
         /// <summary>
         /// Gets or sets the user's email.
         /// </summary>
-        [EmailAddress(ErrorMessage = "Please enter a valid Email.")]
         [Required(ErrorMessage = "Email field is required.")]
-        [MaxLength(100, ErrorMessage = "Maximum length for the Email field is 100 characters.")]
-        [MinLength(3, ErrorMessage = "Minimum length for the Email field is 3 characters.")]
+        [EmailAddress(ErrorMessage = "Please enter a valid Email.")]
+        [RegularExpression(@"^[^\s@]+@[^\s@]+\.[^\s@]+$", ErrorMessage = "Invalid email address.")]
+        [StringLength(100, ErrorMessage = "Email Address must be between {2} and {1} characters long.", MinimumLength = 3)]
         public string Email { get; set; } = string.Empty;
 
         /// <summary>
@@ -22,8 +22,7 @@ namespace backend.Models.AuthModels
         /// </summary>
         [PasswordPropertyText]
         [Required(ErrorMessage = "Password field is required.")]
-        [MaxLength(150, ErrorMessage = "Maximum length for the Password field is 150 characters.")]
-        [MinLength(6, ErrorMessage = "Minimum length for the Password field is 6 characters.")]
+        [StringLength(150, ErrorMessage = "Password must be between {2} and {1} characters long", MinimumLength = 6)]
         public string Password { get; set; } = string.Empty;
     }
 }
