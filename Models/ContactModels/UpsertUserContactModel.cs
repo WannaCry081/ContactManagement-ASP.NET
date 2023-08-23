@@ -20,7 +20,7 @@ namespace backend.Models.ContactModels
         /// </summary>
         [Required(ErrorMessage = "Last Name field is required.")]
         [RegularExpression(@"^[\w\d\s]+$", ErrorMessage = "Invalid last name.")]
-        [StringLength(40, ErrorMessage = "First Name must be between {2} and {1} characters long.", MinimumLength = 2)]
+        [StringLength(40, ErrorMessage = "Last Name must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; } = string.Empty;
 
         /// <summary>
