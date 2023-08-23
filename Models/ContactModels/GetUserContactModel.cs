@@ -39,5 +39,10 @@ namespace backend.Models.ContactModels
         /// Gets or sets the billing address of the contact
         /// </summary>
         public string BillingAddress { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the time created of the contact
+        /// </summary> <summary>
+        public string CreatedAt { get; set; } = string.Empty;
     }
 }
