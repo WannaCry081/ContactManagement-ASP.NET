@@ -25,7 +25,7 @@ namespace backend.Repositories.AuthRepository
         public async Task<bool> IsUserExists(User user)
         {
             return await _context.Users.Where(
-                (c) => c.UserName.Equals(user.UserName) &&
+                (c) => c.UserName.Equals(user.UserName) ||
                     c.Email.Equals(user.Email)
             ).AnyAsync();
         }
