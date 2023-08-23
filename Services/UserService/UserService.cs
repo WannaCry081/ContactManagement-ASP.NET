@@ -74,6 +74,7 @@ namespace backend.Services.UserService
 
             var response = _mapper.Map<GetUserProfileModel>(newUserDetails);
             response.Id = user.Id;
+            response.Email = user.Email;
             
             return response;
         }
