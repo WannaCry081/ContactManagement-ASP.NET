@@ -42,7 +42,7 @@ namespace backend.Models.ContactModels
 
         /// <summary>
         /// Gets or sets the time created of the contact
-        /// </summary> <summary>
-        public string CreatedAt { get; set; } = string.Empty;
+        /// </summary>
+        public DateTime CreatedAt { get; set; }
     }
 }
