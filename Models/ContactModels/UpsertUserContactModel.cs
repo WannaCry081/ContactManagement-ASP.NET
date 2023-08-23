@@ -11,16 +11,16 @@ namespace backend.Models.ContactModels
         /// Gets or sets the first name of the contact.
         /// </summary>
         [Required(ErrorMessage = "First Name field is required.")]
-        [MaxLength(40, ErrorMessage = "Maximum length for the First Name field is 40 characters.")]
-        [MinLength(1, ErrorMessage = "Minimum length for the First Name field is 1 character.")]
+        [RegularExpression(@"^[\w\d\s]+$", ErrorMessage = "Invalid first name.")]
+        [StringLength(40, ErrorMessage = "First Name must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string FirstName { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the last name of the contact.
         /// </summary>
         [Required(ErrorMessage = "Last Name field is required.")]
-        [MaxLength(40, ErrorMessage = "Maximum length for the Last Name field is 40 characters.")]
-        [MinLength(1, ErrorMessage = "Minimum length for the Last Name field is 1 character.")]
+        [RegularExpression(@"^[\w\d\s]+$", ErrorMessage = "Invalid last name.")]
+        [StringLength(40, ErrorMessage = "First Name must be between {2} and {1} characters long.", MinimumLength = 2)]
         public string LastName { get; set; } = string.Empty;
 
         /// <summary>
@@ -28,24 +28,24 @@ namespace backend.Models.ContactModels
         /// </summary>
         [Required(ErrorMessage = "Email field is required.")]
         [EmailAddress(ErrorMessage = "Please enter a valid Email.")]
-        [MaxLength(100, ErrorMessage = "Maximum length for the Email field is 100 characters.")]
-        [MinLength(3, ErrorMessage = "Minimum length for the Email field is 3 characters.")]
+        [RegularExpression(@"^[^\s@]+@[^\s@]+\.[^\s@]+$", ErrorMessage = "Invalid email address.")]
+        [StringLength(100, ErrorMessage = "Email Address must be between {2} and {1} characters long.", MinimumLength = 3)]
         public string Email { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the phone number of the contact.
         /// </summary>
         [Required(ErrorMessage = "Phone No. field is required.")]
-        [MaxLength(14, ErrorMessage = "Maximum length for the Phone No. field is 14 characters.")]
-        [MinLength(11, ErrorMessage = "Minimum length for the Phone No. field is 11 characters.")]
+        [RegularExpression(@"^\+63\d+$", ErrorMessage = "Invalid phone no.")]
+        [StringLength(13, ErrorMessage = "Phone number must be 13 characters long.", MinimumLength = 13)]
         public string PhoneNo { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the delivery address of the contact.
-        /// </summary>
+        /// </summary>  
         [Required(ErrorMessage = "Delivery Address field is required.")]
         public string DeliveryAddress { get; set; } = string.Empty;
-        
+
         /// <summary>
         /// Gets or sets the billing address of the contact
         /// </summary>
