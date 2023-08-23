@@ -309,6 +309,81 @@
             Gets or sets the timestamp of when the contact was last updated.
             </summary>
         </member>
+        <member name="T:backend.Entities.ContactLog">
+            <summary>
+            Represents a log entry for contact-related events.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.ContactLog.Id">
+            <summary>
+            Gets or sets the unique identifier for the contact log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.ContactLog.UserLogId">
+            <summary>
+            Gets or sets the ID of the associated user log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.ContactLog.UserLog">
+            <summary>
+            Gets or sets the associated user log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.ContactLog.EventDescription">
+            <summary>
+            Gets or sets the description of the event associated with the contact log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.ContactLog.EventType">
+            <summary>
+            Gets or sets the type of the event associated with the contact log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.ContactLog.EventTime">
+            <summary>
+            Gets or sets the timestamp of the event associated with the contact log entry.
+            </summary>
+        </member>
+        <member name="T:backend.Entities.Types.ContactEventType">
+            <summary>
+            Represents the type of contact event.
+            </summary>
+        </member>
+        <member name="F:backend.Entities.Types.ContactEventType.Create">
+            <summary>
+            Indicates a contact creation event.
+            </summary>
+        </member>
+        <member name="F:backend.Entities.Types.ContactEventType.Retrieve">
+            <summary>
+            Indicates a contact retrieval event.
+            </summary>
+        </member>
+        <member name="F:backend.Entities.Types.ContactEventType.Update">
+            <summary>
+            Indicates a contact update event.
+            </summary>
+        </member>
+        <member name="F:backend.Entities.Types.ContactEventType.Delete">
+            <summary>
+            Indicates a contact deletion event.
+            </summary>
+        </member>
+        <member name="T:backend.Entities.Types.UserEventType">
+            <summary>
+            Represents the type of user event.
+            </summary>
+        </member>
+        <member name="F:backend.Entities.Types.UserEventType.SignUp">
+            <summary>
+            Indicates a user sign-up event.
+            </summary>
+        </member>
+        <member name="F:backend.Entities.Types.UserEventType.SignIn">
+            <summary>
+            Indicates a user sign-in event.
+            </summary>
+        </member>
         <member name="T:backend.Entities.User">
             <summary>
             Entity class representing user data.
@@ -362,6 +437,41 @@
         <member name="P:backend.Entities.User.Contacts">
             <summary>
             Gets or sets the collection of contacts associated with the user.
+            </summary>
+        </member>
+        <member name="T:backend.Entities.UserLog">
+            <summary>
+            Represents a user log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.UserLog.Id">
+            <summary>
+            Gets or sets the unique identifier for the user log.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.UserLog.UserId">
+            <summary>
+            Gets or sets the ID of the user associated with the log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.UserLog.User">
+            <summary>
+            Gets or sets the user associated with the log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.UserLog.EventDescription">
+            <summary>
+            Gets or sets the description of the event associated with the log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.UserLog.EventType">
+            <summary>
+            Gets or sets the type of the event associated with the log entry.
+            </summary>
+        </member>
+        <member name="P:backend.Entities.UserLog.EventTime">
+            <summary>
+            Gets or sets the timestamp of the event associated with the log entry.
             </summary>
         </member>
         <member name="T:backend.Exceptions.ContactNotFoundException">
@@ -462,6 +572,30 @@
         <member name="M:backend.Migrations.AddContactsTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:backend.Migrations.AddAddresses">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.AddAddresses.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.AddAddresses.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.AddAddresses.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.ActivityLog">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ActivityLog.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ActivityLog.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ActivityLog.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:backend.Models.AuthModels.SignInModel">
             <summary>
             Data model for user sign-in.
@@ -552,6 +686,11 @@
             Gets or sets the billing address of the contact
             </summary>
         </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.CreatedAt">
+            <summary>
+            Gets or sets the time created of the contact
+            </summary>
+        </member>
         <member name="T:backend.Models.ContactModels.UpsertUserContactModel">
             <summary>
             Model for updating or inserting user contact information.
@@ -580,7 +719,7 @@
         <member name="P:backend.Models.ContactModels.UpsertUserContactModel.DeliveryAddress">
             <summary>
             Gets or sets the delivery address of the contact.
-            </summary>
+            </summary>  
         </member>
         <member name="P:backend.Models.ContactModels.UpsertUserContactModel.BillingAddress">
             <summary>
