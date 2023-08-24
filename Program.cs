@@ -7,10 +7,14 @@ using Swashbuckle.AspNetCore.Filters;
 using backend.Data;
 using backend.Repositories.AuthRepository;
 using backend.Repositories.ContactRepository;
+using backend.Repositories.ContactLogRepository;
 using backend.Repositories.UserRepository;
+using backend.Repositories.UserLogRepository;
 using backend.Services.AuthService;
 using backend.Services.ContactService;
+using backend.Services.ContactLogService;
 using backend.Services.UserService;
+using backend.Services.UserLogService;
 
 var builder = WebApplication.CreateBuilder(args);
 
