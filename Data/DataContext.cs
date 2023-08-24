@@ -25,12 +25,12 @@ namespace backend.Data
         public DbSet<Contact> Contacts => Set<Contact>();
 
         /// <summary>
-        /// 
+        /// Gets or sets the DbSet of user logs.
         /// </summary>
         public DbSet<UserLog> UserLogs => Set<UserLog>();
 
         /// <summary>
-        /// 
+        /// Gets or sets the DbSet of contact logs.
         /// </summary>
         public DbSet<ContactLog> ContactLogs => Set<ContactLog>();
     }
