@@ -79,10 +79,16 @@ void ConfigureServices(IServiceCollection services)
     // Register contact repository and service
     services.AddScoped<IContactRepository, ContactRepository>();
     services.AddScoped<IContactService, ContactService>();
+    
+    services.AddScoped<IContactLogRepository, ContactLogRepository>();
+    services.AddScoped<IContactLogService, ContactLogService>(); 
 
     // Register user repository and service
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IUserService, UserService>();
+
+    services.AddScoped<IUserLogRepository, UserLogRepository>();
+    services.AddScoped<IUserLogService, UserLogService>();
 
     // Configure Swagger API documentation
     services.AddEndpointsApiExplorer();
