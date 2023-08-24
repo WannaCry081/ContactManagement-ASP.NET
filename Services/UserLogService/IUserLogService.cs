@@ -1,5 +1,5 @@
 using backend.Entities;
-using backend.Entities.Types;
+using System.Threading.Tasks;
 
 namespace backend.Services.UserLogService
 {
@@ -15,6 +15,6 @@ namespace backend.Services.UserLogService
         /// <param name="description">The description of the event.</param>
         /// <param name="type">The type of the event.</param>
         /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        Task LogUserAuthentication(User user, string description, UserEventType type);
+        Task LogUserAuthentication(User user, string description, string type);
     }
 }

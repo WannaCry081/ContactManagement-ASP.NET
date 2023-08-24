@@ -1,5 +1,4 @@
 using backend.Entities;
-using backend.Entities.Types;
 using backend.Repositories.UserLogRepository;
 
 namespace backend.Services.UserLogService
@@ -22,7 +21,7 @@ namespace backend.Services.UserLogService
         }
 
         /// <inheritdoc />
-        public async Task LogUserAuthentication(User user, string description, UserEventType type)
+        public async Task LogUserAuthentication(User user, string description, string type)
         {
             var userLog = new UserLog()
             {

@@ -3,6 +3,7 @@ using backend.Entities;
 using backend.Exceptions;
 using backend.Models.AuthModels;
 using backend.Repositories.AuthRepository;
+using backend.Services.UserLogService;
 using backend.Utils;
 
 namespace backend.Services.AuthService
@@ -15,6 +16,7 @@ namespace backend.Services.AuthService
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly IAuthRepository _authRepository;
+        private readonly IUserLogService _userLogService;
 
         /// <summary>
         /// Initializes a new instance of the `AuthService` class.
@@ -22,12 +24,14 @@ namespace backend.Services.AuthService
         /// <param name="mapper">The AutoMapper instance.</param>
         /// <param name="configuration">The configuration instance.</param>
         /// <param name="authRepository">The authentication repository.</param>
+        /// <param name="userLogService"></param>
         /// <exception cref="ArgumentNullException">Thrown if any of the parameters are null.</exception>
-        public AuthService(IMapper mapper, IConfiguration configuration, IAuthRepository authRepository)
+        public AuthService(IMapper mapper, IConfiguration configuration, IAuthRepository authRepository, IUserLogService userLogService)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _authRepository = authRepository ?? throw new ArgumentNullException(nameof(authRepository));
+            _userLogService = userLogService ?? throw new ArgumentNullException(nameof(userLogService));
         }
 
         /// <inheritdoc />
@@ -48,6 +52,12 @@ namespace backend.Services.AuthService
                 throw new Exception("Failed to signup user.");
             }
 
+            await _userLogService.LogUserAuthentication(
+                newUser,
+                $"User '{newUser.FirstName} {newUser.LastName}' with the Username '{newUser.UserName}' registered Successfully.",
+                "Sign Up"
+            );
+
             return TokenGenerator.AccessToken(newUser, _configuration);
         }
 
@@ -64,6 +74,12 @@ namespace backend.Services.AuthService
             {
                 throw new UnauthorizedAccessException("Password does not match.");
             }
+
+            await _userLogService.LogUserAuthentication(
+                user,
+                $"User '{user.FirstName} {user.LastName}' with the Username '{user.UserName}' signed in Successfully.",
+                "Sign In"
+            );
 
             return TokenGenerator.AccessToken(user, _configuration);
         }

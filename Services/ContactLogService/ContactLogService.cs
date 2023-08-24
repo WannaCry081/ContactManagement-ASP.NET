@@ -1,5 +1,4 @@
 using backend.Entities;
-using backend.Entities.Types;
 using backend.Repositories.ContactLogRepository;
 
 namespace backend.Services.ContactLogService
@@ -22,14 +21,12 @@ namespace backend.Services.ContactLogService
         }
 
         /// <inheritdoc />
-        public async Task LogContact(User user, Contact contact, string description, ContactEventType type)
+        public async Task LogContact(User user, string description, string type)
         {
             var contactLog = new ContactLog()
             {
                 UserId = user.Id,
                 User = user,
-                ContactId = contact.Id,
-                Contact = contact,
                 EventDescription = description,
                 EventType = type
             };

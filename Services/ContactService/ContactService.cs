@@ -3,6 +3,7 @@ using backend.Entities;
 using backend.Exceptions;
 using backend.Models.ContactModels;
 using backend.Repositories.ContactRepository;
+using backend.Services.ContactLogService;
 
 namespace backend.Services.ContactService
 {
@@ -13,23 +14,31 @@ namespace backend.Services.ContactService
     {
         private readonly IMapper _mapper;
         private readonly IContactRepository _contactRepository;
+        private readonly IContactLogService _contactLogService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactService"/> class.
         /// </summary>
         /// <param name="mapper">The AutoMapper instance.</param>
         /// <param name="contactRepository">The contact repository.</param>
+        /// <param name="contactLogService"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public ContactService(IMapper mapper, IContactRepository contactRepository)
+        public ContactService(IMapper mapper, IContactRepository contactRepository, IContactLogService contactLogService)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _contactRepository = contactRepository ?? throw new ArgumentNullException(nameof(contactRepository));
+            _contactLogService = contactLogService ?? throw new ArgumentNullException(nameof(contactLogService));
         }
 
         /// <inheritdoc/>
         public async Task<ICollection<GetUserContactModel>> GetUserContacts(User user)
         {
             var response = await _contactRepository.GetUserContacts(user.Id);
+            await _contactLogService.LogContact(
+                user,
+                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                "Retrieve"
+            );
             return _mapper.Map<ICollection<GetUserContactModel>>(response);
         }
 
@@ -41,6 +50,13 @@ namespace backend.Services.ContactService
             {
                 throw new ContactNotFoundException("Contact not found.");
             }
+
+            await _contactLogService.LogContact(
+                user,
+                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                "Retrieve"
+            );
+
             return _mapper.Map<GetUserContactModel>(response);
         }
 
@@ -55,6 +71,13 @@ namespace backend.Services.ContactService
             {
                 throw new Exception("Failed to add contact.");
             }
+
+            await _contactLogService.LogContact(
+                user,
+                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                "Create"
+            );
+
             return _mapper.Map<GetUserContactModel>(newContact);
         }
 
@@ -76,6 +99,13 @@ namespace backend.Services.ContactService
 
             var response = _mapper.Map<GetUserContactModel>(newContactDetails);
             response.Id = contact.Id;
+
+            await _contactLogService.LogContact(
+                user,
+                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                "Update"
+            );
+
             return response;
         }
 
@@ -93,6 +123,12 @@ namespace backend.Services.ContactService
             {
                 throw new Exception("Failed to delete contact.");
             }
+
+            await _contactLogService.LogContact(
+                user,
+                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                "Delete"
+            );
 
             return response;
         }
