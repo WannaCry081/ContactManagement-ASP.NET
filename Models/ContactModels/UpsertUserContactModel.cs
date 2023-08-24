@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Identity.Client;
 
 namespace backend.Models.ContactModels
 {
@@ -51,5 +52,15 @@ namespace backend.Models.ContactModels
         /// </summary>
         [Required(ErrorMessage = "Billing Address field is required.")]
         public string BillingAddress { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is marked as favorite.
+        /// </summary>
+        public bool IsFavorite { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is blocked.
+        /// </summary>
+        public bool IsBlock { get; set; } = false;
     }
 }
