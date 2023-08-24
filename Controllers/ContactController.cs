@@ -148,8 +148,10 @@ namespace backend.Controllers
         ///         "email" : "johndoe@example.com",
         ///         "phoneNo" : "09123456789",
         ///         "deliveryAddress" : "Canada",
-        ///         "billingAddress" : "America"
-        ///     }
+        ///         "billingAddress" : "America",
+        ///         "isFavorite" : true,
+        ///         "isBlock" : false
+        ///      }
         ///     
         /// </remarks>
         /// <response code="200">Returns the new user's contact.</response>
@@ -206,7 +208,9 @@ namespace backend.Controllers
         ///         "email" : "johndoe@example.com",
         ///         "phoneNo" : "09123456789",
         ///         "deliveryAddress" : "Canada",
-        ///         "billingAddress" : "America"
+        ///         "billingAddress" : "America",
+        ///         "isFavorite" : true,
+        ///         "isBlock" : false
         ///     }
         ///     
         /// </remarks>
