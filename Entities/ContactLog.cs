@@ -17,14 +17,24 @@ namespace backend.Entities
         public int Id { get; set; } 
 
         /// <summary>
-        /// Gets or sets the ID of the associated user log entry.
-        /// </summary>
-        public int UserLogId { get; set; }
+        /// Gets or sets the ID of the associated authenticated user.
+        /// </summary> 
+        public int UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the associated user log entry.
+        /// Gets or sets the associated authenticated user.
         /// </summary>
-        public UserLog? UserLog { get; set; }
+        public User? User { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ID of the associated contact.
+        /// </summary> 
+        public int ContactId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the associated contact.
+        /// </summary>
+        public Contact? Contact { get; set; }
 
         /// <summary>
         /// Gets or sets the description of the event associated with the contact log entry.
