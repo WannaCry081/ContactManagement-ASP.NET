@@ -36,7 +36,7 @@ namespace backend.Services.ContactService
             var response = await _contactRepository.GetUserContacts(user.Id);
             await _contactLogService.LogContact(
                 user,
-                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                $"User '{user.FirstName} {user.LastName}' successfully retrieve all contacts.",
                 "Retrieve"
             );
             return _mapper.Map<ICollection<GetUserContactModel>>(response);
@@ -53,7 +53,7 @@ namespace backend.Services.ContactService
 
             await _contactLogService.LogContact(
                 user,
-                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                $"User '{user.FirstName} {user.LastName}' successfully retrive a contact.",
                 "Retrieve"
             );
 
@@ -102,7 +102,7 @@ namespace backend.Services.ContactService
 
             await _contactLogService.LogContact(
                 user,
-                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                $"User '{user.FirstName} {user.LastName}' successfully update a contact.",
                 "Update"
             );
 
@@ -126,7 +126,7 @@ namespace backend.Services.ContactService
 
             await _contactLogService.LogContact(
                 user,
-                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                $"User '{user.FirstName} {user.LastName}' successfully delete a contact.",
                 "Delete"
             );
 
