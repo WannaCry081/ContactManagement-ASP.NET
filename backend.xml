@@ -329,14 +329,24 @@
             Gets or sets the unique identifier for the contact log entry.
             </summary>
         </member>
-        <member name="P:backend.Entities.ContactLog.UserLogId">
+        <member name="P:backend.Entities.ContactLog.UserId">
             <summary>
-            Gets or sets the ID of the associated user log entry.
+            Gets or sets the ID of the associated authenticated user.
+            </summary> 
+        </member>
+        <member name="P:backend.Entities.ContactLog.User">
+            <summary>
+            Gets or sets the associated authenticated user.
             </summary>
         </member>
-        <member name="P:backend.Entities.ContactLog.UserLog">
+        <member name="P:backend.Entities.ContactLog.ContactId">
             <summary>
-            Gets or sets the associated user log entry.
+            Gets or sets the ID of the associated contact.
+            </summary> 
+        </member>
+        <member name="P:backend.Entities.ContactLog.Contact">
+            <summary>
+            Gets or sets the associated contact.
             </summary>
         </member>
         <member name="P:backend.Entities.ContactLog.EventDescription">
@@ -618,6 +628,18 @@
         <member name="M:backend.Migrations.AuditLogs.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:backend.Migrations.ModifyContactLog">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ModifyContactLog.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ModifyContactLog.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ModifyContactLog.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:backend.Models.AuthModels.SignInModel">
             <summary>
             Data model for user sign-in.
@@ -865,6 +887,36 @@
             <param name="email">The email of the user.</param>
             <returns>Returns the user with the specified email, or null if not found.</returns>
         </member>
+        <member name="T:backend.Repositories.ContactLogRepository.ContactLogRepository">
+            <summary>
+            
+            </summary> <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.ContactLogRepository.ContactLogRepository.#ctor(backend.Data.DataContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:backend.Repositories.ContactLogRepository.ContactLogRepository.AddContactLog(backend.Entities.ContactLog)">
+            <inheritdoc/>
+        </member>
+        <member name="T:backend.Repositories.ContactLogRepository.IContactLogRepository">
+            <summary>
+            
+            </summary> <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.ContactLogRepository.IContactLogRepository.AddContactLog(backend.Entities.ContactLog)">
+            <summary>
+            
+            </summary>
+            <param name="contactLog"></param>
+            <returns></returns>
+        </member>
         <member name="T:backend.Repositories.ContactRepository.ContactRepository">
             <summary>
             Repository class for contact operations.
@@ -933,6 +985,33 @@
             </summary>
             <param name="contact">The contact to delete.</param>
             <returns>Returns true if the contact was deleted successfully.</returns>
+        </member>
+        <member name="T:backend.Repositories.UserLogRepository.IUserLogRepository">
+            <summary>
+            Represents a repository for managing user log data.
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.UserLogRepository.IUserLogRepository.AddUserLog(backend.Entities.UserLog)">
+            <summary>
+            Adds a user log record to the repository.
+            </summary>
+            <param name="userLog">The user log entity to add.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
+        </member>
+        <member name="T:backend.Repositories.UserLogRepository.UserLogRepository">
+            <summary>
+            Repository class for managing user log data.
+            </summary>
+        </member>
+        <member name="M:backend.Repositories.UserLogRepository.UserLogRepository.#ctor(backend.Data.DataContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:backend.Repositories.UserLogRepository.UserLogRepository"/> class.
+            </summary>
+            <param name="context">The database context.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
+        </member>
+        <member name="M:backend.Repositories.UserLogRepository.UserLogRepository.AddUserLog(backend.Entities.UserLog)">
+            <inheritdoc/>
         </member>
         <member name="T:backend.Repositories.UserRepository.IUserRepository">
             <summary>
@@ -1019,6 +1098,35 @@
             <param name="request">The user's sign-in information.</param>
             <returns>An access token if authentication is successful.</returns>
         </member>
+        <member name="T:backend.Services.ContactLogService.ContactLogService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.ContactLogService.ContactLogService.#ctor(backend.Repositories.ContactLogRepository.IContactLogRepository)">
+            <summary>
+            
+            </summary>
+            <param name="contactLogRepository"></param>
+        </member>
+        <member name="M:backend.Services.ContactLogService.ContactLogService.LogContact(backend.Entities.User,backend.Entities.Contact,System.String,backend.Entities.Types.ContactEventType)">
+            <inheritdoc/> 
+        </member>
+        <member name="T:backend.Services.ContactLogService.IContactLogService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.ContactLogService.IContactLogService.LogContact(backend.Entities.User,backend.Entities.Contact,System.String,backend.Entities.Types.ContactEventType)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="contact"></param>
+            <param name="description"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
         <member name="T:backend.Services.ContactService.ContactService">
             <summary>
             Service for contact operations.
@@ -1091,6 +1199,34 @@
             <param name="user">The user for whom to delete the contact.</param>
             <param name="contactId">The ID of the contact to delete.</param>
             <returns><c>true</c> if the contact is successfully deleted; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="T:backend.Services.UserLogService.IUserLogService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.UserLogService.IUserLogService.LogUserAuthentication(backend.Entities.User,System.String,backend.Entities.Types.UserEventType)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="description"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:backend.Services.UserLogService.UserLogService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:backend.Services.UserLogService.UserLogService.#ctor(backend.Repositories.UserLogRepository.IUserLogRepository)">
+            <summary>
+            
+            </summary>
+            <param name="userLogRepository"></param>
+        </member>
+        <member name="M:backend.Services.UserLogService.UserLogService.LogUserAuthentication(backend.Entities.User,System.String,backend.Entities.Types.UserEventType)">
+            <inheritdoc />
         </member>
         <member name="T:backend.Services.UserService.IUserService">
             <summary>
