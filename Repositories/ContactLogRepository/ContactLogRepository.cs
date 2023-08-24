@@ -1,6 +1,6 @@
 namespace backend.Repositories.ContactLogRepository
 {
-    public class ContactLogRepository : IContactLogRepositorys
+    public class ContactLogRepository : IContactLogRepository
     {
         
     }
