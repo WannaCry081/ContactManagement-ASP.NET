@@ -66,6 +66,16 @@ namespace backend.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public bool IsFavorite { get; set; } = false;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsBlock { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets the timestamp of when the contact was last updated.
         /// </summary>
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
