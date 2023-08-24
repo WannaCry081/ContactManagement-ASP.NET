@@ -339,16 +339,6 @@
             Gets or sets the associated authenticated user.
             </summary>
         </member>
-        <member name="P:backend.Entities.ContactLog.ContactId">
-            <summary>
-            Gets or sets the ID of the associated contact.
-            </summary> 
-        </member>
-        <member name="P:backend.Entities.ContactLog.Contact">
-            <summary>
-            Gets or sets the associated contact.
-            </summary>
-        </member>
         <member name="P:backend.Entities.ContactLog.EventDescription">
             <summary>
             Gets or sets the description of the event associated with the contact log entry.
@@ -362,46 +352,6 @@
         <member name="P:backend.Entities.ContactLog.EventTime">
             <summary>
             Gets or sets the timestamp of the event associated with the contact log entry.
-            </summary>
-        </member>
-        <member name="T:backend.Entities.Types.ContactEventType">
-            <summary>
-            Represents the type of contact event.
-            </summary>
-        </member>
-        <member name="F:backend.Entities.Types.ContactEventType.Create">
-            <summary>
-            Indicates a contact creation event.
-            </summary>
-        </member>
-        <member name="F:backend.Entities.Types.ContactEventType.Retrieve">
-            <summary>
-            Indicates a contact retrieval event.
-            </summary>
-        </member>
-        <member name="F:backend.Entities.Types.ContactEventType.Update">
-            <summary>
-            Indicates a contact update event.
-            </summary>
-        </member>
-        <member name="F:backend.Entities.Types.ContactEventType.Delete">
-            <summary>
-            Indicates a contact deletion event.
-            </summary>
-        </member>
-        <member name="T:backend.Entities.Types.UserEventType">
-            <summary>
-            Represents the type of user event.
-            </summary>
-        </member>
-        <member name="F:backend.Entities.Types.UserEventType.SignUp">
-            <summary>
-            Indicates a user sign-up event.
-            </summary>
-        </member>
-        <member name="F:backend.Entities.Types.UserEventType.SignIn">
-            <summary>
-            Indicates a user sign-in event.
             </summary>
         </member>
         <member name="T:backend.Entities.User">
@@ -638,6 +588,30 @@
             <inheritdoc />
         </member>
         <member name="M:backend.Migrations.ModifyContactLog.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.ModifyEventType">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ModifyEventType.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ModifyEventType.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ModifyEventType.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.ModifyContactLogProperties">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ModifyContactLogProperties.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ModifyContactLogProperties.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.ModifyContactLogProperties.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:backend.Models.AuthModels.SignInModel">
@@ -889,33 +863,30 @@
         </member>
         <member name="T:backend.Repositories.ContactLogRepository.ContactLogRepository">
             <summary>
-            
-            </summary> <summary>
-            
+            Repository class for managing contact log data.
             </summary>
         </member>
         <member name="M:backend.Repositories.ContactLogRepository.ContactLogRepository.#ctor(backend.Data.DataContext)">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Repositories.ContactLogRepository.ContactLogRepository"/> class.
             </summary>
-            <param name="context"></param>
+            <param name="context">The database context.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="context"/> is null.</exception>
         </member>
         <member name="M:backend.Repositories.ContactLogRepository.ContactLogRepository.AddContactLog(backend.Entities.ContactLog)">
             <inheritdoc/>
         </member>
         <member name="T:backend.Repositories.ContactLogRepository.IContactLogRepository">
             <summary>
-            
-            </summary> <summary>
-            
+            Represents a repository for managing contact log data.
             </summary>
         </member>
         <member name="M:backend.Repositories.ContactLogRepository.IContactLogRepository.AddContactLog(backend.Entities.ContactLog)">
             <summary>
-            
+            Adds a contact log record to the repository.
             </summary>
-            <param name="contactLog"></param>
-            <returns></returns>
+            <param name="contactLog">The contact log entity to add.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> representing the asynchronous operation.</returns>
         </member>
         <member name="T:backend.Repositories.ContactRepository.ContactRepository">
             <summary>
@@ -1057,13 +1028,14 @@
             Service class for authentication operations.
             </summary>
         </member>
-        <member name="M:backend.Services.AuthService.AuthService.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration,backend.Repositories.AuthRepository.IAuthRepository)">
+        <member name="M:backend.Services.AuthService.AuthService.#ctor(AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration,backend.Repositories.AuthRepository.IAuthRepository,backend.Services.UserLogService.IUserLogService)">
             <summary>
             Initializes a new instance of the `AuthService` class.
             </summary>
             <param name="mapper">The AutoMapper instance.</param>
             <param name="configuration">The configuration instance.</param>
             <param name="authRepository">The authentication repository.</param>
+            <param name="userLogService"></param>
             <exception cref="T:System.ArgumentNullException">Thrown if any of the parameters are null.</exception>
         </member>
         <member name="M:backend.Services.AuthService.AuthService.SignUp(backend.Models.AuthModels.SignUpModel)">
@@ -1100,29 +1072,29 @@
         </member>
         <member name="T:backend.Services.ContactLogService.ContactLogService">
             <summary>
-            
+            Service class for managing contact log operations.
             </summary>
         </member>
         <member name="M:backend.Services.ContactLogService.ContactLogService.#ctor(backend.Repositories.ContactLogRepository.IContactLogRepository)">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Services.ContactLogService.ContactLogService"/> class.
             </summary>
-            <param name="contactLogRepository"></param>
+            <param name="contactLogRepository">The contact log repository.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="contactLogRepository"/> is null.</exception>
         </member>
-        <member name="M:backend.Services.ContactLogService.ContactLogService.LogContact(backend.Entities.User,backend.Entities.Contact,System.String,backend.Entities.Types.ContactEventType)">
-            <inheritdoc/> 
+        <member name="M:backend.Services.ContactLogService.ContactLogService.LogContact(backend.Entities.User,System.String,System.String)">
+            <inheritdoc />
         </member>
         <member name="T:backend.Services.ContactLogService.IContactLogService">
             <summary>
-            
+            Represents a service for managing contact log operations.
             </summary>
         </member>
-        <member name="M:backend.Services.ContactLogService.IContactLogService.LogContact(backend.Entities.User,backend.Entities.Contact,System.String,backend.Entities.Types.ContactEventType)">
+        <member name="M:backend.Services.ContactLogService.IContactLogService.LogContact(backend.Entities.User,System.String,System.String)">
             <summary>
             
             </summary>
             <param name="user"></param>
-            <param name="contact"></param>
             <param name="description"></param>
             <param name="type"></param>
             <returns></returns>
@@ -1132,12 +1104,13 @@
             Service for contact operations.
             </summary>
         </member>
-        <member name="M:backend.Services.ContactService.ContactService.#ctor(AutoMapper.IMapper,backend.Repositories.ContactRepository.IContactRepository)">
+        <member name="M:backend.Services.ContactService.ContactService.#ctor(AutoMapper.IMapper,backend.Repositories.ContactRepository.IContactRepository,backend.Services.ContactLogService.IContactLogService)">
             <summary>
             Initializes a new instance of the <see cref="T:backend.Services.ContactService.ContactService"/> class.
             </summary>
             <param name="mapper">The AutoMapper instance.</param>
             <param name="contactRepository">The contact repository.</param>
+            <param name="contactLogService"></param>
             <exception cref="T:System.ArgumentNullException"></exception>
         </member>
         <member name="M:backend.Services.ContactService.ContactService.GetUserContacts(backend.Entities.User)">
@@ -1202,10 +1175,10 @@
         </member>
         <member name="T:backend.Services.UserLogService.IUserLogService">
             <summary>
-            
+            Represents a service for managing user log operations.
             </summary>
         </member>
-        <member name="M:backend.Services.UserLogService.IUserLogService.LogUserAuthentication(backend.Entities.User,System.String,backend.Entities.Types.UserEventType)">
+        <member name="M:backend.Services.UserLogService.IUserLogService.LogUserAuthentication(backend.Entities.User,System.String,System.String)">
             <summary>
             
             </summary>
@@ -1216,16 +1189,17 @@
         </member>
         <member name="T:backend.Services.UserLogService.UserLogService">
             <summary>
-            
+            Service class for managing user log operations.
             </summary>
         </member>
         <member name="M:backend.Services.UserLogService.UserLogService.#ctor(backend.Repositories.UserLogRepository.IUserLogRepository)">
             <summary>
-            
+            Initializes a new instance of the <see cref="T:backend.Services.UserLogService.UserLogService"/> class.
             </summary>
-            <param name="userLogRepository"></param>
+            <param name="userLogRepository">The user log repository.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="userLogRepository"/> is null.</exception>
         </member>
-        <member name="M:backend.Services.UserLogService.UserLogService.LogUserAuthentication(backend.Entities.User,System.String,backend.Entities.Types.UserEventType)">
+        <member name="M:backend.Services.UserLogService.UserLogService.LogUserAuthentication(backend.Entities.User,System.String,System.String)">
             <inheritdoc />
         </member>
         <member name="T:backend.Services.UserService.IUserService">
@@ -1258,13 +1232,14 @@
             Service class for user-related operations.
             </summary>
         </member>
-        <member name="M:backend.Services.UserService.UserService.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Http.IHttpContextAccessor,backend.Repositories.UserRepository.IUserRepository)">
+        <member name="M:backend.Services.UserService.UserService.#ctor(AutoMapper.IMapper,Microsoft.AspNetCore.Http.IHttpContextAccessor,backend.Repositories.UserRepository.IUserRepository,backend.Services.UserLogService.IUserLogService)">
             <summary>
             Initializes a new instance of the <see cref="T:backend.Services.UserService.UserService"/> class.
             </summary>
             <param name="mapper">The AutoMapper instance for object mapping.</param>
             <param name="httpContext">The HttpContextAccessor to access the current HTTP context.</param>
             <param name="userRepository">The repository for user data access.</param>
+            <param name="userLogService"></param>
             <exception cref="T:System.ArgumentNullException">Thrown when any of the parameters is null.</exception>
         </member>
         <member name="M:backend.Services.UserService.UserService.GetUserByToken">
