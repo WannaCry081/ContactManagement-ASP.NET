@@ -55,6 +55,8 @@ namespace backend.Repositories.ContactRepository
             contact.PhoneNo = newContactDetails.PhoneNo;
             contact.BillingAddress = newContactDetails.BillingAddress;
             contact.DeliveryAddress = newContactDetails.DeliveryAddress;
+            contact.IsFavorite = newContactDetails.IsFavorite;
+            contact.IsBlock = newContactDetails.IsBlock;
             contact.UpdatedAt = DateTime.Now;
 
             var result = await _context.SaveChangesAsync();
