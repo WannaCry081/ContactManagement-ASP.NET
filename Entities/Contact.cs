@@ -54,7 +54,7 @@ namespace backend.Entities
         /// Gets or sets the delivery address of the contact.
         /// </summary>
         public string DeliveryAddress { get; set; } = string.Empty;
-        
+
         /// <summary>
         /// Gets or sets the billing address of the contact
         /// </summary>
@@ -66,12 +66,12 @@ namespace backend.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         /// <summary>
-        /// 
+        /// Gets or sets a value indicating whether the item is marked as favorite.
         /// </summary>
         public bool IsFavorite { get; set; } = false;
 
         /// <summary>
-        /// 
+        /// Gets or sets a value indicating whether the item is blocked.
         /// </summary>
         public bool IsBlock { get; set; } = false;
 
