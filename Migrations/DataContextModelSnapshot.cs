@@ -82,9 +82,6 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
-
                     b.Property<string>("EventDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -92,15 +89,14 @@ namespace backend.Migrations
                     b.Property<DateTime>("EventTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EventType")
-                        .HasColumnType("int");
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ContactId");
 
                     b.HasIndex("UserId");
 
@@ -171,8 +167,9 @@ namespace backend.Migrations
                     b.Property<DateTime>("EventTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("EventType")
-                        .HasColumnType("int");
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -195,19 +192,11 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Entities.ContactLog", b =>
                 {
-                    b.HasOne("backend.Entities.Contact", "Contact")
-                        .WithMany()
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("backend.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Contact");
 
                     b.Navigation("User");
                 });
