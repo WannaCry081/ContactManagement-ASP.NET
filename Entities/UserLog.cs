@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using backend.Entities.Types;
 
 namespace backend.Entities
 {
@@ -34,7 +33,7 @@ namespace backend.Entities
         /// <summary>
         /// Gets or sets the type of the event associated with the log entry.
         /// </summary>
-        public UserEventType EventType { get; set; }
+        public string EventType { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the timestamp of the event associated with the log entry.
