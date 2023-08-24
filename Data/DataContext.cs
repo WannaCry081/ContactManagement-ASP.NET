@@ -23,5 +23,15 @@ namespace backend.Data
         /// Gets or sets the DbSet of contacts.
         /// </summary>
         public DbSet<Contact> Contacts => Set<Contact>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DbSet<UserLog> UserLogs => Set<UserLog>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DbSet<ContactLog> ContactLogs => Set<ContactLog>();
     }
 }
