@@ -249,6 +249,16 @@
             Gets or sets the DbSet of contacts.
             </summary>
         </member>
+        <member name="P:backend.Data.DataContext.UserLogs">
+            <summary>
+            Gets or sets the DbSet of user logs.
+            </summary>
+        </member>
+        <member name="P:backend.Data.DataContext.ContactLogs">
+            <summary>
+            Gets or sets the DbSet of contact logs.
+            </summary>
+        </member>
         <member name="T:backend.Entities.Contact">
             <summary>
             Entity class representing user contacts.
@@ -594,6 +604,18 @@
             <inheritdoc />
         </member>
         <member name="M:backend.Migrations.ActivityLog.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:backend.Migrations.AuditLogs">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.AuditLogs.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.AuditLogs.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:backend.Migrations.AuditLogs.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:backend.Models.AuthModels.SignInModel">
