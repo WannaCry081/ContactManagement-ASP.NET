@@ -64,7 +64,7 @@ namespace backend.Services.UserService
 
             await _userLogService.LogUserAuthentication(
                 response,
-                $"User '{response.FirstName} {response.LastName}' with the Username '{response.UserName}' retrieve Successfully.",
+                $"User '{response.FirstName} {response.LastName}' with the Username '{response.UserName}' retrieve profile Successfully.",
                 "Retrieve"
             );
 
@@ -88,8 +88,8 @@ namespace backend.Services.UserService
             response.Email = user.Email;
 
             await _userLogService.LogUserAuthentication(
-                _mapper.Map<User>(response),
-                $"User '{response.FirstName} {response.LastName}' with the Username '{response.UserName}' retrieve Successfully.",
+                user,
+                $"User '{response.FirstName} {response.LastName}' with the Username '{response.UserName}' update profile Successfully.",
                 "Update"
             );
 
