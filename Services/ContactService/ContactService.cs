@@ -4,6 +4,7 @@ using backend.Exceptions;
 using backend.Models.ContactModels;
 using backend.Repositories.ContactRepository;
 using backend.Services.ContactLogService;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace backend.Services.ContactService
 {
@@ -45,7 +46,7 @@ namespace backend.Services.ContactService
             {
                 throw new ContactNotFoundException("Contact not found.");
             }
-            
+
             // Records audit log for geting user's contact information
             await _contactLogService.LogContact(
                 user,
@@ -104,6 +105,23 @@ namespace backend.Services.ContactService
                 "Update"
             );
 
+            return response;
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> UpdateUserContactProperty(User user, int contactId, JsonPatchDocument<Contact> request)
+        {
+            var contact = await _contactRepository.GetUserContact(user.Id, contactId);
+            if (contact is null)
+            {
+                throw new ContactNotFoundException("Contact not found.");
+            }
+
+            var response = await _contactRepository.UpdateUserContactProperty(contact, request);
+            if (!response)
+            {
+                throw new Exception("Failed to update contact.");
+            }
             return response;
         }
 
