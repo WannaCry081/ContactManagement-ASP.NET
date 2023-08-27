@@ -4,6 +4,8 @@ using backend.Exceptions;
 using backend.Services.ContactService;
 using backend.Services.UserService;
 using backend.Models.ContactModels;
+using Microsoft.AspNetCore.JsonPatch;
+using backend.Entities;
 
 namespace backend.Controllers
 {
@@ -128,7 +130,7 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while attempting to get user's contact.");
+                _logger.LogCritical(ex, "An error occurred while attempting to get user's contact.");
                 return Problem(ex.Message);
             }
         }
@@ -254,6 +256,45 @@ namespace backend.Controllers
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPatch("{contactId}")]
+        public async Task<IActionResult> UpdateUserContactProperty([FromRoute] int contactId, [FromBody] JsonPatchDocument<Contact> request)
+        {
+            try
+            {
+                // To decrypt jwt token and returns the user
+                var user = await _userService.GetUserByToken();
+
+                var response = await _contactService.UpdateUserContactProperty(user, contactId, request);
+                return Ok("Successfully updated user's contact.");
+            }
+            catch (TokenNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get access token.");
+                return Forbid(ex.Message);
+            }
+            catch (UserNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return NotFound(ex.Message);
+            }
+            catch (ContactNotFoundException ex)
+            {
+                _logger.LogError(ex, "An error occurred while attempting to get user.");
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, "An error occurred while attempting to update the user's contact property.");
+                return Problem(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Deletes user's contact information.
         /// </summary>
         /// <param name="contactId">The ID of the specific contact.</param>
@@ -301,9 +342,9 @@ namespace backend.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while attenpting to delete user's contact.");
+                _logger.LogCritical(ex, "An error occurred while attenpting to delete user's contact.");
                 return Problem(ex.Message);
             }
         }
     }
-}   
+}
