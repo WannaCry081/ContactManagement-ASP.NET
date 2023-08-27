@@ -41,6 +41,16 @@ namespace backend.Models.ContactModels
         public string BillingAddress { get; set; } = string.Empty;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the item is marked as favorite.
+        /// </summary>
+        public bool IsFavorite { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is blocked.
+        /// </summary>
+        public bool IsBlock { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets the time created of the contact
         /// </summary>
         public DateTime CreatedAt { get; set; }
