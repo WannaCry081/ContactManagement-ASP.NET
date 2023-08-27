@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Entities;
@@ -59,6 +60,14 @@ namespace backend.Repositories.ContactRepository
             contact.IsBlock = newContactDetails.IsBlock;
             contact.UpdatedAt = DateTime.Now;
 
+            var result = await _context.SaveChangesAsync();
+            return result > 0;
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> UpdateUserContactProperty(Contact contact, JsonPatchDocument<Contact> request)
+        {
+            request.ApplyTo(contact);
             var result = await _context.SaveChangesAsync();
             return result > 0;
         }
