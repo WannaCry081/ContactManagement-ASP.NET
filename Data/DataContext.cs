@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using backend.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
 {
@@ -13,6 +13,17 @@ namespace backend.Data
         /// </summary>
         /// <param name="options">The DbContext options.</param>
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+
+        /// <summary>
+        /// 
+        /// </summary> <summary>
+        /// 
+        /// </summary>
+        public void Initialize()
+        {
+            Database.Migrate();
+            SaveChanges();
+        }
 
         /// <summary>
         /// Gets or sets the DbSet of users.
