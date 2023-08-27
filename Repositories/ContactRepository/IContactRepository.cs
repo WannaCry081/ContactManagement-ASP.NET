@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.JsonPatch;
 using backend.Entities;
 
 namespace backend.Repositories.ContactRepository
@@ -36,6 +37,14 @@ namespace backend.Repositories.ContactRepository
         /// <param name="newContactDetails">The new contact details.</param>
         /// <returns>Returns true if the contact was updated successfully.</returns>
         Task<bool> UpdateUserContact(Contact contact, Contact newContactDetails);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<bool> UpdateUserContactProperty(Contact contact, JsonPatchDocument<Contact> request);
 
         /// <summary>
         /// Delete a user contact.
