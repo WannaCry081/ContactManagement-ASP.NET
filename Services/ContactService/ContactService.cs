@@ -34,11 +34,6 @@ namespace backend.Services.ContactService
         public async Task<ICollection<GetUserContactModel>> GetUserContacts(User user)
         {
             var response = await _contactRepository.GetUserContacts(user.Id);
-            await _contactLogService.LogContact(
-                user,
-                $"User '{user.FirstName} {user.LastName}' successfully retrieve all contacts.",
-                "Retrieve"
-            );
             return _mapper.Map<ICollection<GetUserContactModel>>(response);
         }
 
@@ -50,10 +45,11 @@ namespace backend.Services.ContactService
             {
                 throw new ContactNotFoundException("Contact not found.");
             }
-
+            
+            // Records audit log for geting user's contact information
             await _contactLogService.LogContact(
                 user,
-                $"User '{user.FirstName} {user.LastName}' successfully retrive a contact.",
+                $"User '{user.FirstName} {user.LastName}' Successfully Retrieve a Contact.",
                 "Retrieve"
             );
 
@@ -72,9 +68,10 @@ namespace backend.Services.ContactService
                 throw new Exception("Failed to add contact.");
             }
 
+            // Records audit log for creating new user's contact
             await _contactLogService.LogContact(
                 user,
-                $"User '{user.FirstName} {user.LastName}' successfully created a contact.",
+                $"User '{user.FirstName} {user.LastName}' Successfully Created a Contact.",
                 "Create"
             );
 
@@ -100,9 +97,10 @@ namespace backend.Services.ContactService
             var response = _mapper.Map<GetUserContactModel>(newContactDetails);
             response.Id = contact.Id;
 
+            // Records audit log for updating user's contact information
             await _contactLogService.LogContact(
                 user,
-                $"User '{user.FirstName} {user.LastName}' successfully update a contact.",
+                $"User '{user.FirstName} {user.LastName}' Successfully Update a Contact.",
                 "Update"
             );
 
@@ -124,9 +122,10 @@ namespace backend.Services.ContactService
                 throw new Exception("Failed to delete contact.");
             }
 
+            // Records audit log for deleting user's contact information
             await _contactLogService.LogContact(
                 user,
-                $"User '{user.FirstName} {user.LastName}' successfully delete a contact.",
+                $"User '{user.FirstName} {user.LastName}' Successfully Delete a Contact.",
                 "Delete"
             );
 
