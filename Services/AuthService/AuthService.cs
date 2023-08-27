@@ -52,6 +52,7 @@ namespace backend.Services.AuthService
                 throw new Exception("Failed to signup user.");
             }
 
+            // Records audit log for registering a new user
             await _userLogService.LogUserAuthentication(
                 newUser,
                 $"User '{newUser.FirstName} {newUser.LastName}' with the Username '{newUser.UserName}' registered Successfully.",
@@ -75,6 +76,7 @@ namespace backend.Services.AuthService
                 throw new UnauthorizedAccessException("Password does not match.");
             }
 
+            // Records audit log for logging a user
             await _userLogService.LogUserAuthentication(
                 user,
                 $"User '{user.FirstName} {user.LastName}' with the Username '{user.UserName}' signed in Successfully.",
