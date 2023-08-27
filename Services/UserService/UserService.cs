@@ -62,9 +62,10 @@ namespace backend.Services.UserService
         {
             var response = await GetUserByToken();
 
+            // Records audit log for getting user's profile
             await _userLogService.LogUserAuthentication(
                 response,
-                $"User '{response.FirstName} {response.LastName}' with the Username '{response.UserName}' retrieve profile Successfully.",
+                $"User '{response.FirstName} {response.LastName}' Successfully Retrive User Profile.",
                 "Retrieve"
             );
 
@@ -87,9 +88,10 @@ namespace backend.Services.UserService
             response.Id = user.Id;
             response.Email = user.Email;
 
+            // Records audit log for updating user's profile
             await _userLogService.LogUserAuthentication(
                 user,
-                $"User '{response.FirstName} {response.LastName}' with the Username '{response.UserName}' update profile Successfully.",
+                $"User '{response.FirstName} {response.LastName}' Successfully Update User Profile.",
                 "Update"
             );
 
