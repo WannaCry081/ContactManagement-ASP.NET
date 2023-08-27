@@ -16,12 +16,108 @@ using backend.Services.ContactLogService;
 using backend.Services.UserService;
 using backend.Services.UserLogService;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Invoke the ConfigureServices method
-ConfigureServices(builder.Services);
+builder.Services.AddControllers();
+
+// Configure database context using SQL Server
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseSqlite(connectionString);
+});
+
+// Configure AutoMapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+// Add HttpContextAccessor for accessing HttpContext in services
+builder.Services.AddHttpContextAccessor();
+
+// Register authentication and authorization services
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+// Register contact repository and service
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+builder.Services.AddScoped<IContactService, ContactService>();
+
+builder.Services.AddScoped<IContactLogRepository, ContactLogRepository>();
+builder.Services.AddScoped<IContactLogService, ContactLogService>();
+
+// Register user repository and service
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddScoped<IUserLogRepository, UserLogRepository>();
+builder.Services.AddScoped<IUserLogService, UserLogService>();
+
+// Configure Swagger API documentation
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    // Configure OAuth2 security definition for Swagger
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    // Apply security filter to operations
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+
+    // Configure Swagger documentation settings
+    options.SwaggerDoc("v1", new OpenApiInfo()
+    {
+        Version = "v1",
+        Title = "Contact Management System API",
+        Description = "A simple Contact Management System API showcasing basic CRUD operations.",
+        Contact = new OpenApiContact()
+        {
+            Name = "Lirae Que A. Data",
+            Url = new Uri("https://github.com/TheDayDreamer01")
+        }
+    });
+
+    // Include XML comments for documentation
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFile));
+});
+
+// Configure JWT Bearer authentication
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(
+                builder.Configuration.GetSection("AppSettings:JWT_SECRET_KEY").Value!
+            )
+        )
+    };
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<DataContext>();
+    db.Initialize();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -31,12 +127,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(builder =>
-{
-    builder.AllowAnyOrigin() 
-            .AllowAnyMethod()
-            .AllowAnyHeader();
-});
+// Enable UseCors() 
+app.UseCors();
 
 // Redirect HTTP requests to HTTPS
 app.UseHttpsRedirection();
@@ -49,93 +141,3 @@ app.MapControllers();
 
 // Run the application
 app.Run();
-
-// Configure services for dependency injection
-void ConfigureServices(IServiceCollection services)
-{
-    services.AddControllers();
-
-    // Configure database context using SQL Server
-    services.AddDbContext<DataContext>(options =>
-    {
-        options.UseSqlServer(
-            builder.Configuration.GetConnectionString("DefaultConnection")
-        );
-    });
-
-    // Configure AutoMapper
-    services.AddAutoMapper(typeof(Program).Assembly);
-
-    // Configure Cross-origin resource sharing
-    services.AddCors();
-
-    // Add HttpContextAccessor for accessing HttpContext in services
-    services.AddHttpContextAccessor();
-
-    // Register authentication and authorization services
-    services.AddScoped<IAuthRepository, AuthRepository>();
-    services.AddScoped<IAuthService, AuthService>();
-
-    // Register contact repository and service
-    services.AddScoped<IContactRepository, ContactRepository>();
-    services.AddScoped<IContactService, ContactService>();
-    
-    services.AddScoped<IContactLogRepository, ContactLogRepository>();
-    services.AddScoped<IContactLogService, ContactLogService>(); 
-
-    // Register user repository and service
-    services.AddScoped<IUserRepository, UserRepository>();
-    services.AddScoped<IUserService, UserService>();
-
-    services.AddScoped<IUserLogRepository, UserLogRepository>();
-    services.AddScoped<IUserLogService, UserLogService>();
-
-    // Configure Swagger API documentation
-    services.AddEndpointsApiExplorer();
-    services.AddSwaggerGen(options =>
-    {
-        // Configure OAuth2 security definition for Swagger
-        options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
-        {
-            In = ParameterLocation.Header,
-            Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey
-        });
-
-        // Apply security filter to operations
-        options.OperationFilter<SecurityRequirementsOperationFilter>();
-
-        // Configure Swagger documentation settings
-        options.SwaggerDoc("v1", new OpenApiInfo()
-        {
-            Version = "v1",
-            Title = "Contact Management System API",
-            Description = "A simple Contact Management System API showcasing basic CRUD operations.",
-            Contact = new OpenApiContact()
-            {
-                Name = "Lirae Que A. Data",
-                Url = new Uri("https://github.com/TheDayDreamer01")
-            }
-        });
-
-        // Include XML comments for documentation
-        var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-    });
-
-    // Configure JWT Bearer authentication
-    services.AddAuthentication().AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateIssuerSigningKey = true,
-            ValidateAudience = false,
-            ValidateIssuer = false,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(
-                    builder.Configuration.GetSection("AppSettings:JWT_SECRET_KEY").Value!
-                )
-            )
-        };
-    });
-}
