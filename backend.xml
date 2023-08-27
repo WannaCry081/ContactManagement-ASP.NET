@@ -125,9 +125,7 @@
                     "email" : "johndoe@example.com",
                     "phoneNo" : "09123456789",
                     "deliveryAddress" : "Canada",
-                    "billingAddress" : "America",
-                    "isFavorite" : true,
-                    "isBlock" : false
+                    "billingAddress" : "America"
                  }
                 
             </remarks>
@@ -153,9 +151,7 @@
                     "email" : "johndoe@example.com",
                     "phoneNo" : "09123456789",
                     "deliveryAddress" : "Canada",
-                    "billingAddress" : "America",
-                    "isFavorite" : true,
-                    "isBlock" : false
+                    "billingAddress" : "America"
                 }
                 
             </remarks>
@@ -242,6 +238,13 @@
             Initializes a new instance of the `DataContext` class.
             </summary>
             <param name="options">The DbContext options.</param>
+        </member>
+        <member name="M:backend.Data.DataContext.Initialize">
+            <summary>
+            
+            </summary> <summary>
+            
+            </summary>
         </member>
         <member name="P:backend.Data.DataContext.Users">
             <summary>
@@ -544,102 +547,6 @@
         <member name="M:backend.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:backend.Migrations.AddContactsTable">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AddContactsTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AddContactsTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AddContactsTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.AddAddresses">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AddAddresses.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AddAddresses.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AddAddresses.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.ActivityLog">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ActivityLog.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ActivityLog.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ActivityLog.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.AuditLogs">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AuditLogs.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AuditLogs.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AuditLogs.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.ModifyContactLog">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ModifyContactLog.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ModifyContactLog.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ModifyContactLog.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.ModifyEventType">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ModifyEventType.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ModifyEventType.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ModifyEventType.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.ModifyContactLogProperties">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ModifyContactLogProperties.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ModifyContactLogProperties.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.ModifyContactLogProperties.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:backend.Migrations.AddFavorites">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AddFavorites.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AddFavorites.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:backend.Migrations.AddFavorites.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
         <member name="T:backend.Models.AuthModels.SignInModel">
             <summary>
             Data model for user sign-in.
@@ -768,16 +675,6 @@
         <member name="P:backend.Models.ContactModels.UpsertUserContactModel.BillingAddress">
             <summary>
             Gets or sets the billing address of the contact
-            </summary>
-        </member>
-        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.IsFavorite">
-            <summary>
-            Gets or sets a value indicating whether the item is marked as favorite.
-            </summary>
-        </member>
-        <member name="P:backend.Models.ContactModels.UpsertUserContactModel.IsBlock">
-            <summary>
-            Gets or sets a value indicating whether the item is blocked.
             </summary>
         </member>
         <member name="T:backend.Models.UserModels.GetUserProfileModel">
