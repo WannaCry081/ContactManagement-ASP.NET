@@ -1,5 +1,6 @@
 using backend.Entities;
 using backend.Models.ContactModels;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace backend.Services.ContactService
 {
@@ -39,6 +40,15 @@ namespace backend.Services.ContactService
         /// <param name="request">The updated details of the contact.</param>
         /// <returns>The <see cref="GetUserContactModel"/> representing the updated contact.</returns>
         Task<GetUserContactModel> UpdateUserContact(User user, int contactId, UpsertUserContactModel request);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="contactId"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task<bool> UpdateUserContactProperty(User user, int contactId, JsonPatchDocument<Contact> request);
         
         /// <summary>
         /// Deletes a contact associated with the specified user.
