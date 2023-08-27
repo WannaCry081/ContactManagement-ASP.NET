@@ -19,7 +19,7 @@ using backend.Services.UserLogService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 // Configure database context using SQL Server
 builder.Services.AddDbContext<DataContext>(options =>
