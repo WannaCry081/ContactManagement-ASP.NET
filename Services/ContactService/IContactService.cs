@@ -42,14 +42,14 @@ namespace backend.Services.ContactService
         Task<GetUserContactModel> UpdateUserContact(User user, int contactId, UpsertUserContactModel request);
 
         /// <summary>
-        /// 
+        /// Updates a specific property of a user's contact.
         /// </summary>
-        /// <param name="user"></param>
-        /// <param name="contactId"></param>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        /// <param name="user">The user for whom the contact property is being updated.</param>
+        /// <param name="contactId">The ID of the contact whose property is being updated.</param>
+        /// <param name="request">The JSON Patch Document representing the property updates.</param>
+        /// <returns>Returns true if the update was successful; otherwise, false.</returns>
         Task<bool> UpdateUserContactProperty(User user, int contactId, JsonPatchDocument<Contact> request);
-        
+
         /// <summary>
         /// Deletes a contact associated with the specified user.
         /// </summary>
