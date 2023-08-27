@@ -256,12 +256,32 @@ namespace backend.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Updates user's specific contact information.
         /// </summary>
-        /// <param name="contactId"></param>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        /// <param name="contactId">The ID of the specific contact.</param>
+        /// <param name="request">The specific contact detail to be updated.</param>
+        /// <returns>Returns a success message</returns>
+        /// <remarks>
+        /// Sample Request:
+        /// 
+        ///     PATCH /api/contact/1
+        ///     [
+        ///       {
+        ///         "path": "/isFavorite",
+        ///         "op": "replace",
+        ///         "value": true
+        ///       }
+        ///     ]
+        ///      
+        /// </remarks>
+        /// <response code="200">Successfully updated user's contact.</response>
+        /// <response code="403">Invalid jwt token.</response>
+        /// <response code="404">User and Contact with the specified ID not found.</response>
+        /// <response code="500">Internal server error.</response>
         [HttpPatch("{contactId}")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> UpdateUserContactProperty([FromRoute] int contactId, [FromBody] JsonPatchDocument<Contact> request)
         {
             try
