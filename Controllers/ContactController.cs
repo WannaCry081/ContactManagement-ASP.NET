@@ -148,9 +148,7 @@ namespace backend.Controllers
         ///         "email" : "johndoe@example.com",
         ///         "phoneNo" : "09123456789",
         ///         "deliveryAddress" : "Canada",
-        ///         "billingAddress" : "America",
-        ///         "isFavorite" : true,
-        ///         "isBlock" : false
+        ///         "billingAddress" : "America"
         ///      }
         ///     
         /// </remarks>
@@ -208,9 +206,7 @@ namespace backend.Controllers
         ///         "email" : "johndoe@example.com",
         ///         "phoneNo" : "09123456789",
         ///         "deliveryAddress" : "Canada",
-        ///         "billingAddress" : "America",
-        ///         "isFavorite" : true,
-        ///         "isBlock" : false
+        ///         "billingAddress" : "America"
         ///     }
         ///     
         /// </remarks>
@@ -310,4 +306,4 @@ namespace backend.Controllers
             }
         }
     }
-}
+}   
