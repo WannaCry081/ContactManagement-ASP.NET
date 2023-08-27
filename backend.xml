@@ -160,6 +160,14 @@
             <response code="404">User and Contact with the specified ID not found.</response>
             <response code="500">Internal server error.</response>
         </member>
+        <member name="M:backend.Controllers.ContactController.UpdateUserContactProperty(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{backend.Entities.Contact})">
+            <summary>
+            
+            </summary>
+            <param name="contactId"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:backend.Controllers.ContactController.DeleteUserContact(System.Int32)">
             <summary>
             Deletes user's contact information.
@@ -637,6 +645,16 @@
             Gets or sets the billing address of the contact
             </summary>
         </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.IsFavorite">
+            <summary>
+            Gets or sets a value indicating whether the item is marked as favorite.
+            </summary>
+        </member>
+        <member name="P:backend.Models.ContactModels.GetUserContactModel.IsBlock">
+            <summary>
+            Gets or sets a value indicating whether the item is blocked.
+            </summary>
+        </member>
         <member name="P:backend.Models.ContactModels.GetUserContactModel.CreatedAt">
             <summary>
             Gets or sets the time created of the contact
@@ -845,6 +863,9 @@
         <member name="M:backend.Repositories.ContactRepository.ContactRepository.UpdateUserContact(backend.Entities.Contact,backend.Entities.Contact)">
             <inheritdoc/>
         </member>
+        <member name="M:backend.Repositories.ContactRepository.ContactRepository.UpdateUserContactProperty(backend.Entities.Contact,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{backend.Entities.Contact})">
+            <inheritdoc />
+        </member>
         <member name="M:backend.Repositories.ContactRepository.ContactRepository.DeleteUserContact(backend.Entities.Contact)">
             <inheritdoc/>
         </member>
@@ -882,6 +903,14 @@
             <param name="contact">The existing contact.</param>
             <param name="newContactDetails">The new contact details.</param>
             <returns>Returns true if the contact was updated successfully.</returns>
+        </member>
+        <member name="M:backend.Repositories.ContactRepository.IContactRepository.UpdateUserContactProperty(backend.Entities.Contact,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{backend.Entities.Contact})">
+            <summary>
+            
+            </summary>
+            <param name="contact"></param>
+            <param name="request"></param>
+            <returns></returns>
         </member>
         <member name="M:backend.Repositories.ContactRepository.IContactRepository.DeleteUserContact(backend.Entities.Contact)">
             <summary>
@@ -1058,6 +1087,9 @@
         <member name="M:backend.Services.ContactService.ContactService.UpdateUserContact(backend.Entities.User,System.Int32,backend.Models.ContactModels.UpsertUserContactModel)">
             <inheritdoc/>
         </member>
+        <member name="M:backend.Services.ContactService.ContactService.UpdateUserContactProperty(backend.Entities.User,System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{backend.Entities.Contact})">
+            <inheritdoc />
+        </member>
         <member name="M:backend.Services.ContactService.ContactService.DeleteUserContact(backend.Entities.User,System.Int32)">
             <inheritdoc/>
         </member>
@@ -1097,6 +1129,15 @@
             <param name="contactId">The ID of the contact to update.</param>
             <param name="request">The updated details of the contact.</param>
             <returns>The <see cref="T:backend.Models.ContactModels.GetUserContactModel"/> representing the updated contact.</returns>
+        </member>
+        <member name="M:backend.Services.ContactService.IContactService.UpdateUserContactProperty(backend.Entities.User,System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{backend.Entities.Contact})">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <param name="contactId"></param>
+            <param name="request"></param>
+            <returns></returns>
         </member>
         <member name="M:backend.Services.ContactService.IContactService.DeleteUserContact(backend.Entities.User,System.Int32)">
             <summary>
