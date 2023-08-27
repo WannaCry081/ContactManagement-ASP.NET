@@ -39,11 +39,11 @@ namespace backend.Repositories.ContactRepository
         Task<bool> UpdateUserContact(Contact contact, Contact newContactDetails);
 
         /// <summary>
-        /// 
+        /// Updates a specific property of a contact.
         /// </summary>
-        /// <param name="contact"></param>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        /// <param name="contact">The contact whose property is being updated.</param>
+        /// <param name="request">The JSON Patch Document representing the property updates.</param>
+        /// <returns>Returns true if the update was successful; otherwise, false.</returns>
         Task<bool> UpdateUserContactProperty(Contact contact, JsonPatchDocument<Contact> request);
 
         /// <summary>
