@@ -162,11 +162,28 @@
         </member>
         <member name="M:backend.Controllers.ContactController.UpdateUserContactProperty(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{backend.Entities.Contact})">
             <summary>
-            
+            Updates user's specific contact information.
             </summary>
-            <param name="contactId"></param>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="contactId">The ID of the specific contact.</param>
+            <param name="request">The specific contact detail to be updated.</param>
+            <returns>Returns a success message</returns>
+            <remarks>
+            Sample Request:
+            
+                PATCH /api/contact/1
+                [
+                  {
+                    "path": "/isFavorite",
+                    "op": "replace",
+                    "value": true
+                  }
+                ]
+                 
+            </remarks>
+            <response code="200">Successfully updated user's contact.</response>
+            <response code="403">Invalid jwt token.</response>
+            <response code="404">User and Contact with the specified ID not found.</response>
+            <response code="500">Internal server error.</response>
         </member>
         <member name="M:backend.Controllers.ContactController.DeleteUserContact(System.Int32)">
             <summary>
@@ -906,11 +923,11 @@
         </member>
         <member name="M:backend.Repositories.ContactRepository.IContactRepository.UpdateUserContactProperty(backend.Entities.Contact,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{backend.Entities.Contact})">
             <summary>
-            
+            Updates a specific property of a contact.
             </summary>
-            <param name="contact"></param>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="contact">The contact whose property is being updated.</param>
+            <param name="request">The JSON Patch Document representing the property updates.</param>
+            <returns>Returns true if the update was successful; otherwise, false.</returns>
         </member>
         <member name="M:backend.Repositories.ContactRepository.IContactRepository.DeleteUserContact(backend.Entities.Contact)">
             <summary>
@@ -1132,12 +1149,12 @@
         </member>
         <member name="M:backend.Services.ContactService.IContactService.UpdateUserContactProperty(backend.Entities.User,System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{backend.Entities.Contact})">
             <summary>
-            
+            Updates a specific property of a user's contact.
             </summary>
-            <param name="user"></param>
-            <param name="contactId"></param>
-            <param name="request"></param>
-            <returns></returns>
+            <param name="user">The user for whom the contact property is being updated.</param>
+            <param name="contactId">The ID of the contact whose property is being updated.</param>
+            <param name="request">The JSON Patch Document representing the property updates.</param>
+            <returns>Returns true if the update was successful; otherwise, false.</returns>
         </member>
         <member name="M:backend.Services.ContactService.IContactService.DeleteUserContact(backend.Entities.User,System.Int32)">
             <summary>
